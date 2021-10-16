@@ -1,4 +1,5 @@
 import App from './App.svelte'
+import { auth, provider } from './firebase'
 
 const app = new App({
   target: document.getElementById('app')
