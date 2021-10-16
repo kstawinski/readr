@@ -1,5 +1,5 @@
 import App from './App.svelte'
-import { auth, provider } from './firebase'
+import 'carbon-components-svelte/css/white.css'
 
 const app = new App({
   target: document.getElementById('app')
