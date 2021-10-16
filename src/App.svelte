@@ -1,24 +1,22 @@
 <script lang="ts">
-  import logo from './assets/svelte.png'
-  import Counter from './lib/Counter.svelte'
+  import { Router, Route, Link } from 'svelte-routing'
+  import Home from './views/Home.svelte'
+  import Login from './views/Login.svelte'
+
+  export let url = ''
 </script>
 
-<main>
-  <img src={logo} alt="Svelte Logo" />
-  <h1>Hello Typescript!</h1>
+<div id="app">
+  <Router {url}>
+    <nav>
+      <Link to="/">Home</Link>
+      <Link to="login">Login</Link>
+    </nav>
 
-  <Counter />
-
-  <p>
-    Visit <a href="https://svelte.dev">svelte.dev</a> to learn how to build Svelte
-    apps.
-  </p>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme">SvelteKit</a> for
-    the officially supported framework, also powered by Vite!
-  </p>
-</main>
+    <Route path="/" component={Home} />
+    <Route path="login" component={Login} />
+  </Router>
+</div>
 
 <style>
   :root {
