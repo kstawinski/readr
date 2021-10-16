@@ -1,5 +1,6 @@
 import { auth, provider } from '../firebase'
 import { signInWithPopup } from 'firebase/auth'
+import { Store } from '../hooks/Store'
 
 export const Auth = {
   signInUsingGoogle: () => new Promise((resolve, reject) => {
@@ -11,5 +12,7 @@ export const Auth = {
       .catch(error => {
         reject(error)
       })
-  })
+  }),
+
+  isLoggedIn: () => Store.getItem('uid') !== null
 }
