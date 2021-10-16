@@ -2,6 +2,7 @@
   import { Router, Route, Link } from 'svelte-routing'
   import Home from './views/Home.svelte'
   import Login from './views/Login.svelte'
+  import Books from './views/Books.svelte'
 
   export let url = ''
 </script>
@@ -15,6 +16,7 @@
 
     <Route path="/" component={Home} />
     <Route path="login" component={Login} />
+    <Route path="books" component={Books} />
   </Router>
 </div>
 
