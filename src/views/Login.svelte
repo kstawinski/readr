@@ -4,6 +4,8 @@
   import { auth, provider } from '../firebase'
   import { signInWithPopup } from 'firebase/auth'
   import { authState } from 'rxfire/auth'
+  import { Button } from 'carbon-components-svelte'
+  import LogoGoogle16 from 'carbon-icons-svelte/lib/LogoGoogle16'
 
   let user;
 
@@ -19,5 +21,10 @@
 
 <main>
   <h1>{PAGE_TITLE}</h1>
-  <button on:click={login}>Zaloguj przez konto Google</button>
+
+  <Button
+    kind="secondary"
+    icon={LogoGoogle16}
+    on:click={login}
+  >Zaloguj używając Google</Button>
 </main>
