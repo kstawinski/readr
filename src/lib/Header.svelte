@@ -23,7 +23,7 @@
 <SideNav bind:isOpen={ isSideNavOpen }>
   <SideNavItems>
     <SideNavLink
-      text="Wszystkie książki"
+      text="Biblioteka"
       on:click={ () => navigate('/') }
     />
 
