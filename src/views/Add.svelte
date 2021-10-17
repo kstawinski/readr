@@ -71,7 +71,7 @@
       <p>Dodaj ksiażkę, wprowadzając numer ISBN znajdujący się z tyłu okładki.</p>
 
       <div class="add__field">
-        <TextInput labelText="Numer ISBN" bind:value={ISBN} />
+        <TextInput type="number" labelText="Numer ISBN" bind:value={ISBN} />
       </div>
 
       <div class="add__footer">
