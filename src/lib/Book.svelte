@@ -9,10 +9,10 @@
 </script>
 
 <div class="book">
-  <div class="book__thumbnail" on:click="{redirectToBook}">
+  <div class="book__thumbnail" on:click="{ redirectToBook }">
     <div
       class="book__img"
-      style="background-image: url({book.thumbnail})">
+      style="background-image: url({ book.thumbnail })">
     </div>
 
     <!-- <Rating
@@ -22,16 +22,13 @@
     /> -->
   </div>
 
-  <div class="book__content mx-1 mt-2 book__text">
+  <div class="book__content book__text">
     <div class="book__title mb-1">{ book.title }</div>
-    <div>{ book.author }</div>
+    <div class="book__author">{ book.author }</div>
   </div>
 </div>
 
 <style>
-  .link {
-    color: #000;
-  }
   .book__title {
 	 font-weight: 600;
 	 font-size: 105%;
@@ -49,12 +46,13 @@
 }
  .book__text {
 	 line-height: 1.3;
+   margin: 10px 5px;
 }
- .book__rating {
-	 position: absolute;
-	 top: 0;
-	 right: 0;
-	 margin: 5px 5px 0 0;
+.book__author {
+  margin-top: 5px;
+  font-size: 95%;
+  opacity: 0.9;
 }
+
  
 </style>
