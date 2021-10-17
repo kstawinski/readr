@@ -21,11 +21,13 @@
   <Content>
     <Grid>
       <Row>
-        {#each books as book}
-          <Column sm={1}>
-            <Book {book} />
-          </Column>
-        {/each}
+        <div class="books__list">
+          {#each books as book}
+            <div class="books__item">
+              <Book {book} />
+            </div>
+          {/each}
+      </div>
       </Row>
     </Grid>
 
@@ -45,5 +47,16 @@
     bottom: 0;
     left: 0;
     margin: 20px;
+  }
+
+  .books__item {
+    max-width: 31%;
+    padding: 5px;
+  }
+
+  .books__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 </style>
