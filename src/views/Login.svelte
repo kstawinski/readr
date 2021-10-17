@@ -1,5 +1,5 @@
 <script lang="ts">
-  const PAGE_TITLE: string = 'Login'
+  const PAGE_TITLE: string = 'Zaloguj się'
 
   import { Auth } from '../hooks/Auth'
   import { Store } from '../hooks/Store'
@@ -22,24 +22,35 @@
   }
 </script>
 
-<main>
-  <h1>{PAGE_TITLE}</h1>
+<main class="login__content">
+  <div>
+    <h1 class="login__title">{PAGE_TITLE}</h1>
+    <p class="login__paragraph">Użyj swojego konta Google, aby zarejestrować lub zalogować się do aplikacji.</p>
 
-  <div class="login__buttons">
     <Button
       kind="secondary"
       icon={LogoGoogle16}
       on:click={login}
+      size="lg"
       class="login__button"
     >Zaloguj używając konta Google</Button>
   </div>
 </main>
 
 <style>
-  .login__buttons {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin: 20px;
+  .login__title {
+    font-size: 2.225rem;
+  }
+
+  .login__paragraph {
+    margin: 15px 0 30px 0;
+  }
+
+  .login__content {
+    margin: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
   }
 </style>
