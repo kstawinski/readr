@@ -1,7 +1,7 @@
 {
   "name": "Readr",
   "short_name": "Readr",
-  "theme_color": "#000000",
+  "theme_color": "#161616",
   "icons": [
     {
       "src": "/favicon.png",
@@ -11,6 +11,6 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#000000",
+  "background_color": "#161616",
   "scope": "/"
 }
