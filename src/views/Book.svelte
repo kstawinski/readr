@@ -1,7 +1,6 @@
 <script lang="ts">
   import { Books } from '../hooks/Books'
-
-  const PAGE_TITLE: string = 'Widok ksiazki'
+  import { ImageLoader, InlineLoading } from 'carbon-components-svelte'
 
   export let id: string
   let book: Book
@@ -11,13 +10,41 @@
 </script>
 
 <main class="book">
-  <h1>{PAGE_TITLE}</h1>
-
   {#if book}
-    <pre>{book.id}</pre>  
+    <div class="book__thumbnail">
+      <ImageLoader src="{book.thumbnail}">
+        <div slot="loading">
+          <InlineLoading />
+        </div>
+        <div slot="error">An error occurred.</div>
+      </ImageLoader>
+    </div>
+
+    <div class="book__meta">
+      <div class="book__metaItem book__metaItem-featured">{book.title}</div>
+      <div class="book__metaItem">{book.author}</div>
+    </div>
   {/if}
 </main>
 
 <style>
+  .book__thumbnail {
+    width: 50%;
+    max-width: 220px;
+    margin: 20px auto;
+    display: block;
+  }
 
+  .book__meta {
+    text-align: center;
+  }
+
+  .book__metaItem:not(:last-child) {
+    margin-bottom: 6px;
+  }
+
+  .book__metaItem-featured {
+    font-weight: bold;
+    font-size: 130%;
+  }
 </style>
