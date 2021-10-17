@@ -1,11 +1,14 @@
 import { db } from '../firebase'
 import { collection, getDocs, where, query } from 'firebase/firestore'
+import { Store } from './Store'
+
+const UID = Store.getItem('uid')
 
 export const Books = {
-  getAllBooks: (uid: string) => new Promise((resolve, reject) => {
+  getAllBooks: () => new Promise((resolve, reject) => {
     const booksRef = query(
       collection(db, 'books'),
-      where('uid', '==', uid)
+      where('uid', '==', UID)
     )
 
     getDocs(booksRef).then(qSnap => {
