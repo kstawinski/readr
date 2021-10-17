@@ -1,7 +1,6 @@
 <script lang="ts">
   import { Router, Route, Link } from 'svelte-routing'
   import AuthProxy from './views/AuthProxy.svelte'
-  import Home from './views/Home.svelte'
   import Login from './views/Login.svelte'
   import Books from './views/Books.svelte'
   import Add from './views/Add.svelte'
@@ -17,9 +16,8 @@
       <Link to="login">Login</Link>
     </nav>
 
-    <Route path="/" component={Home} />
+    <AuthProxy path="/" component={Books} />
     <Route path="login" component={Login} />
-    <AuthProxy path="/books" component={Books} />
     <AuthProxy path="/add" component={Add} />
     <AuthProxy path="/book/:id" component={Book} />
   </Router>
