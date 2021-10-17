@@ -8,6 +8,7 @@
   import { db } from '../firebase'
   import { collection, addDoc } from 'firebase/firestore'
   import { Store } from '../hooks/Store'
+  import { Parsers } from '../hooks/Parsers'
 
   let ISBN: number
   let isFetching = false
@@ -43,13 +44,17 @@
         const book = {
           uid: Store.getItem('uid'),
           isbn: Number(ISBN),
-          title,
-          author,
+          title: Parsers.parseTitle(title),
+          author: Parsers.parseAuthor(author),
           thumbnail: `https://covers.openlibrary.org/b/isbn/${ISBN}-L.jpg`,
           addDate: new Date(),
           publishedAt: Number(publicationYear)
         }
-        console.log(book)
+
+        // submit book
+        addDoc(collection(db, 'books'), book)
+          .then(({ id }) => console.log(`Document ID: ${id}`))
+          .catch(error => console.error(error))
       })
       .catch(error => {
         alert('Nie udalo sie pobrac danych')
@@ -62,7 +67,7 @@
 
   <Tile>
     <p>Dodaj ksiażkę, wprowadzając numer ISBN znajdujący się z tyłu okładki.</p>
-    
+
     <div class="add__field">
       <TextInput labelText="Numer ISBN" bind:value={ISBN} />
     </div>
