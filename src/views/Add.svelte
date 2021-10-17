@@ -5,10 +5,14 @@
   import Search16 from 'carbon-icons-svelte/lib/Search16'
   import axios from 'axios'
 
+  import { db } from '../firebase'
+  import { collection, addDoc } from 'firebase/firestore'
+  import { Store } from '../hooks/Store'
+
   let ISBN: number
   let isFetching = false
 
-  const searchUsingISBN = () => {
+  const searchUsingISBN = () => new Promise((resolve, reject) => {
     if (ISBN && ISBN.toString().length === 13) {
       isFetching = true
       axios.get(
@@ -17,14 +21,40 @@
         .then(data => data.data.bibs[0])
         .then(book => {
           console.log(book)
+          resolve(book)
           isFetching = false
         })
+        .catch(error => reject(error))
     }
     else {
       alert('Niepoprawna dlugosc numer isbn')
       return
     }
-  }
+  })
+
+  // addDoc(collection(db, 'books'), {
+  //   name: "Tokyo",
+  //   country: "Japan"
+  // });
+
+  const addBook = () => new Promise((resolve, reject) => {
+    searchUsingISBN()
+      .then(({ title, author, publicationYear }) => {
+        const book = {
+          uid: Store.getItem('uid'),
+          isbn: Number(ISBN),
+          title,
+          author,
+          thumbnail: `https://covers.openlibrary.org/b/isbn/${ISBN}-L.jpg`,
+          addDate: new Date(),
+          publishedAt: Number(publicationYear)
+        }
+        console.log(book)
+      })
+      .catch(error => {
+        alert('Nie udalo sie pobrac danych')
+      })
+  })
 </script>
 
 <main>
@@ -41,7 +71,7 @@
       <Button
         kind="secondary"
         icon={Search16}
-        on:click={searchUsingISBN}
+        on:click={addBook}
         disabled={isFetching}
       >Szukaj książki</Button>
 
