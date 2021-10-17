@@ -79,7 +79,7 @@
           kind="secondary"
           icon={Search16}
           on:click={addBook}
-          disabled={isFetching}
+          disabled={isFetching || (ISBN || 0).toString().length !== 13}
         >Szukaj książki</Button>
 
         {#if isFetching}
