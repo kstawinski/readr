@@ -3,6 +3,7 @@
 
   import { Button, Tile, TextInput, InlineLoading, Row, Content } from 'carbon-components-svelte'
   import Search16 from 'carbon-icons-svelte/lib/Search16'
+  import ScanAlt16 from 'carbon-icons-svelte/lib/ScanAlt16'
   import axios from 'axios'
 
   import { db } from '../firebase'
@@ -82,9 +83,16 @@
           disabled={isFetching || (ISBN || 0).toString().length !== 13}
         >Szukaj książki</Button>
 
+        <Button
+          kind="ghost"
+          iconDescription="Skanuj etykietę"
+          icon={ScanAlt16}
+          disabled
+        />
+
         {#if isFetching}
           <div class="add__loader">
-            <InlineLoading />
+            <InlineLoading description="Szukam..." />
           </div>
         {/if}
       </div>
@@ -112,6 +120,6 @@
   }
 
   .add__loader {
-    margin-left: 20px;
+    margin-left: 10px;
   }
 </style>
