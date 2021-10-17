@@ -5,6 +5,7 @@
   import Login from './views/Login.svelte'
   import Books from './views/Books.svelte'
   import Add from './views/Add.svelte'
+  import Book from './views/Book.svelte'
 
   export let url = ''
 </script>
@@ -20,6 +21,7 @@
     <Route path="login" component={Login} />
     <AuthProxy path="/books" component={Books} />
     <AuthProxy path="/add" component={Add} />
+    <AuthProxy path="/book/:id" component={Book} />
   </Router>
 </div>
 
