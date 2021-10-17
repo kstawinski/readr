@@ -12,6 +12,11 @@
   let isSideNavOpen = false
 
   export let title: string
+
+  const logout = () => {
+    localStorage.clear()
+    navigate('/login', { replace: true })
+  }
 </script>
 
 <Header platformName="{ title }" bind:isSideNavOpen>
@@ -36,7 +41,7 @@
 
     <SideNavLink
       text="Wyloguj się"
-      on:click={ () => navigate('/logout') }
+      on:click={ () => logout() }
     />
   </SideNavItems>
 </SideNav>
