@@ -1,7 +1,7 @@
 <script lang="ts">
   const PAGE_TITLE: string = 'Dodaj książkę'
 
-  import { Button, Tile, TextInput, InlineLoading, Row } from 'carbon-components-svelte'
+  import { Button, Tile, TextInput, InlineLoading, Row, Content } from 'carbon-components-svelte'
   import Search16 from 'carbon-icons-svelte/lib/Search16'
   import axios from 'axios'
 
@@ -9,6 +9,7 @@
   import { collection, addDoc } from 'firebase/firestore'
   import { Store } from '../hooks/Store'
   import { Parsers } from '../hooks/Parsers'
+  import Header from '../lib/Header.svelte'
 
   let ISBN: number
   let isFetching = false
@@ -63,33 +64,44 @@
 </script>
 
 <main>
-  <h1>{PAGE_TITLE}</h1>
+  <Header title={PAGE_TITLE} />
 
-  <Tile>
-    <p>Dodaj ksiażkę, wprowadzając numer ISBN znajdujący się z tyłu okładki.</p>
+  <Content class="add__container">
+    <Tile light>
+      <p>Dodaj ksiażkę, wprowadzając numer ISBN znajdujący się z tyłu okładki.</p>
 
-    <div class="add__field">
-      <TextInput labelText="Numer ISBN" bind:value={ISBN} />
-    </div>
+      <div class="add__field">
+        <TextInput labelText="Numer ISBN" bind:value={ISBN} />
+      </div>
 
-    <div class="add__footer">
-      <Button
-        kind="secondary"
-        icon={Search16}
-        on:click={addBook}
-        disabled={isFetching}
-      >Szukaj książki</Button>
+      <div class="add__footer">
+        <Button
+          kind="secondary"
+          icon={Search16}
+          on:click={addBook}
+          disabled={isFetching}
+        >Szukaj książki</Button>
 
-      {#if isFetching}
-        <div class="add__loader">
-          <InlineLoading />
-        </div>
-      {/if}
-    </div>
-  </Tile>
+        {#if isFetching}
+          <div class="add__loader">
+            <InlineLoading />
+          </div>
+        {/if}
+      </div>
+    </Tile>
+  </Content>
 </main>
 
 <style>
+  @media (max-width: 500px) {
+    :global(.add__container) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  } 
+
   .add__field {
     margin: 15px 0 25px 0;
   }
