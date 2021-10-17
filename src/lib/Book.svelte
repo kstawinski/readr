@@ -1,9 +1,15 @@
 <script lang="ts">
   export let book: Book
+  import { navigate } from 'svelte-routing'
+
+  const redirectToBook = () => navigate(
+    `/book/${ book.id }`,
+    { replace: true }
+  )
 </script>
 
 <div class="book">
-  <div class="book__thumbnail">
+  <div class="book__thumbnail" on:click="{redirectToBook}">
     <div
       class="book__img"
       style="background-image: url({book.thumbnail})">
@@ -23,6 +29,9 @@
 </div>
 
 <style>
+  .link {
+    color: #000;
+  }
   .book__title {
 	 font-weight: 600;
 	 font-size: 105%;
