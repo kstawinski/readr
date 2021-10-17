@@ -1,5 +1,5 @@
 <script lang="ts">
-  const PAGE_TITLE: string = 'Add book'
+  const PAGE_TITLE: string = 'Dodaj książkę'
 
   import { Button, Tile, TextInput } from 'carbon-components-svelte'
   import Search16 from 'carbon-icons-svelte/lib/Search16'
