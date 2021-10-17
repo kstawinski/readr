@@ -24,16 +24,20 @@
 
 <main class="login__content">
   <div>
-    <h1 class="login__title">{PAGE_TITLE}</h1>
-    <p class="login__paragraph">Użyj swojego konta Google, aby zarejestrować lub zalogować się do aplikacji.</p>
+    <img class="login__illustration" src="./login-illustration.svg" alt="">
 
-    <Button
-      kind="secondary"
-      icon={LogoGoogle16}
-      on:click={login}
-      size="lg"
-      class="login__button"
-    >Zaloguj używając konta Google</Button>
+    <div class="login__fadeAnimation">
+      <h1 class="login__title">{PAGE_TITLE}</h1>
+      <p class="login__paragraph">Użyj swojego konta Google, aby zarejestrować lub zalogować się do aplikacji.</p>
+
+      <Button
+        kind="secondary"
+        icon={LogoGoogle16}
+        on:click={login}
+        size="lg"
+        class="login__button"
+      >Zaloguj używając konta Google</Button>
+    </div>
   </div>
 </main>
 
@@ -52,5 +56,38 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+  }
+
+  .login__illustration {
+    max-width: 300px;
+    height: auto;
+    margin-bottom: 50px;
+    animation-name: fade-top;
+    animation-duration: 3s;
+  }
+
+  .login__fadeAnimation {
+    animation-name: fade;
+    animation-duration: 1s;
+  }
+
+  @keyframes fade-top {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      tranasform: translateY(0);
+    }
+  }
+
+  @keyframes fade {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 </style>
