@@ -29,6 +29,16 @@
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
+  @media (max-width: 500px) {
+    :global(.bx--side-nav~.bx--content) {
+      margin-left: 0 !important;
+    }
+  }
+
+  :global(.bx--content) {
+    padding: 0.5rem !important;
+  }
+
   main {
     text-align: center;
     padding: 1em;
