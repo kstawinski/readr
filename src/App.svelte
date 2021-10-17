@@ -33,10 +33,17 @@
     :global(.bx--side-nav~.bx--content) {
       margin-left: 0 !important;
     }
+    :global(.bx--header~.bx--content) {
+      margin-top: 2rem !important;
+    }
+  }
+
+  :global(.bx--side-nav__overlay-active) {
+    z-index: 10;
   }
 
   :global(.bx--content) {
-    padding: 0.5rem !important;
+    padding: 0.8rem !important;
   }
 
   main {
