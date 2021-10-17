@@ -11,11 +11,6 @@
 
 <div id="app">
   <Router {url}>
-    <nav>
-      <Link to="/">Home</Link>
-      <Link to="login">Login</Link>
-    </nav>
-
     <AuthProxy path="/" component={Books} />
     <Route path="login" component={Login} />
     <AuthProxy path="/add" component={Add} />
