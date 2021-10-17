@@ -9,9 +9,16 @@
 
   const login = () => {
     Auth.signInUsingGoogle()
-      .then(({ uid }) => Store.setItem('uid', uid)
-        .then(() => navigate('/books', { replace: true }))
-      )
+      .then(({ uid, displayName, email, photoURL }) => {
+        Store.setItem('uid', uid)
+        Store.setItem('name', displayName)
+        Store.setItem('email', email)
+        Store.setItem('avatar', photoURL)
+      })
+      .then(() => navigate(
+        '/books',
+        { replace: true }
+      ))
   }
 </script>
 
