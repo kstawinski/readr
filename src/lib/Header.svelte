@@ -33,6 +33,11 @@
     />
 
     <SideNavLink
+      text="Dodaj książkę"
+      on:click={ () => navigate('/add') }
+    />
+
+    <SideNavLink
       text="Lista kolekcji"
       on:click={ () => navigate('/collections') }
     />
