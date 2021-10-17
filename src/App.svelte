@@ -5,14 +5,22 @@
   import Books from './views/Books.svelte'
   import Add from './views/Add.svelte'
   import Book from './views/Book.svelte'
+  import { Auth } from './hooks/Auth'
 
   export let url = ''
+
+  const isAuthenticated = Auth.isLoggedIn()
 </script>
 
 <div id="app">
   <Router {url}>
-    <AuthProxy path="/" component={Books} />
+    {#if isAuthenticated}
+      <Route path="/" component={Books} />
+    {:else}
+      <Route path="/" component={Login} />
+    {/if}
     <Route path="login" component={Login} />
+    <AuthProxy path="/books" component={Books} />
     <AuthProxy path="/add" component={Add} />
     <AuthProxy path="/book/:id" component={Book} />
   </Router>
