@@ -32,6 +32,18 @@
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
+  :global(.loader) {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.loader > div:first-child) {
+    width: auto;
+  }
+
   @media (max-width: 500px) {
     :global(.bx--side-nav~.bx--content) {
       margin-left: 0 !important;

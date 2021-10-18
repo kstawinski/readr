@@ -5,13 +5,23 @@
 
   export let id: string
   let book: Book
+  let isLoading = true
 
   Books.getBook(id)
-    .then(response => book = response)
+    .then(response => {
+      book = response
+      isLoading = false
+    })
 </script>
 
 <main>
-  {#if book}
+  {#if isLoading}
+    <Header title="" />
+
+    <div class="loader">
+      <InlineLoading />
+    </div>
+  {:else}
     <Header title={ book.title } />
 
     <Content>
