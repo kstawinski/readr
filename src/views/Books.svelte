@@ -6,6 +6,7 @@
   import Book from '../lib/Book.svelte'
 
   import BookmarkAdd16 from 'carbon-icons-svelte/lib/BookmarkAdd16'
+  import Search16 from 'carbon-icons-svelte/lib/Search16'
   import { Grid, Row, Column, Button, Content, InlineLoading } from 'carbon-components-svelte'
   import { navigate } from 'svelte-routing'
 
@@ -48,6 +49,12 @@
         kind="secondary"
         on:click={redirectToAddView}
       >Dodaj kolejną książkę</Button>
+
+      <Button
+        kind="ghost"
+        iconDescription="Szukaj ksiązki"
+        icon={Search16}
+      />
     </div>
   </Content>
   {/if}
@@ -55,10 +62,21 @@
 
 <style>
   .books__footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+    width: 100%;
+  }
+
+  :global(.books__footer::before) {
+    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgb(255 255 255 / 52%) 25%, rgba(255,255,255,0) 100%);
+    width: 100%;
+    height: 100px;
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
-    margin: 20px;
   }
 
   .books__item {
