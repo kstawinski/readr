@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Books } from '../hooks/Books'
-  import { ImageLoader, InlineLoading } from 'carbon-components-svelte'
+  import { ImageLoader, InlineLoading, Content } from 'carbon-components-svelte'
+  import Header from '../lib/Header.svelte'
 
   export let id: string
   let book: Book
@@ -9,25 +10,34 @@
     .then(response => book = response)
 </script>
 
-<main class="book">
+<main>
   {#if book}
-    <div class="book__thumbnail">
-      <ImageLoader src="{book.thumbnail}">
-        <div slot="loading">
-          <InlineLoading />
-        </div>
-        <div slot="error">An error occurred.</div>
-      </ImageLoader>
-    </div>
+    <Header title={ book.title } />
 
-    <div class="book__meta">
-      <div class="book__metaItem book__metaItem-featured">{book.title}</div>
-      <div class="book__metaItem">{book.author}</div>
-    </div>
+    <Content>
+      <div class="book">
+        <div class="book__thumbnail">
+          <ImageLoader src="{book.thumbnail}">
+            <div slot="loading">
+              <InlineLoading />
+            </div>
+            <div slot="error">An error occurred.</div>
+          </ImageLoader>
+        </div>
+
+        <div class="book__meta">
+          <div class="book__metaItem book__metaItem-featured">{book.title}</div>
+          <div class="book__metaItem">{book.author}</div>
+        </div>
+      </div>
+    </Content>
   {/if}
 </main>
 
 <style>
+  .book {
+    margin-top: 2.5rem;
+  }
   .book__thumbnail {
     width: 50%;
     max-width: 220px;
