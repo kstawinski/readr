@@ -1,7 +1,16 @@
 <script lang="ts">
   const PAGE_TITLE: string = 'Dodaj książkę'
 
-  import { Button, Tile, TextInput, InlineLoading, Row, Content } from 'carbon-components-svelte'
+  import { slide } from 'svelte/transition'
+  import {
+    Button,
+    Tile,
+    TextInput,
+    InlineLoading,
+    Content,
+    InlineNotification,
+    NotificationActionButton
+  } from 'carbon-components-svelte'
   import Search16 from 'carbon-icons-svelte/lib/Search16'
   import ScanAlt16 from 'carbon-icons-svelte/lib/ScanAlt16'
   import axios from 'axios'
@@ -11,9 +20,15 @@
   import { Store } from '../hooks/Store'
   import { Parsers } from '../hooks/Parsers'
   import Header from '../lib/Header.svelte'
+  import { navigate } from 'svelte-routing'
 
   let ISBN: number
   let isFetching = false
+
+  const notification = {
+    isVisible: false,
+    id: ''
+  }
 
   const searchUsingISBN = () => new Promise((resolve, reject) => {
     if (ISBN && ISBN.toString().length === 13) {
@@ -55,11 +70,16 @@
 
         // submit book
         addDoc(collection(db, 'books'), book)
-          .then(({ id }) => console.log(`Document ID: ${id}`))
+          .then(({ id }) => {
+            console.log(`Document ID: ${id}`)
+            notification.id = id
+            notification.isVisible = true
+          })
           .catch(error => console.error(error))
       })
       .catch(error => {
         alert('Nie udalo sie pobrac danych')
+        console.warn(error)
       })
   })
 </script>
@@ -96,6 +116,22 @@
           </div>
         {/if}
       </div>
+
+      <div class="add__notification">
+        {#if notification.isVisible}
+        <InlineNotification
+          kind="success"
+          title="Sukces:"
+          subtitle="Książka została dodana."
+        >
+          <div slot="actions" transition:slide>
+            <NotificationActionButton
+              on:click={() => navigate(`/book/${notification.id}`)}
+            >Zobacz</NotificationActionButton>
+          </div>
+        </InlineNotification>
+        {/if}
+      </div>
     </Tile>
   </Content>
 </main>
@@ -108,7 +144,18 @@
       justify-content: center;
       height: calc(100vh - 3rem);
     }
-  } 
+  }
+
+  .add__notification {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+  }
+
+  :global(.add__notification > div:first-child) {
+    margin: 0;
+    max-width: 100%;
+  }
 
   .add__field {
     margin: 15px 0 25px 0;
