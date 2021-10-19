@@ -28,7 +28,11 @@
 <ComposedModal bind:open on:close={() => dispatch('close')}>
   <ModalHeader label="Wyszukiwarka" title="Czego szukasz?" />
   <ModalBody hasForm>
-    <Search placeholder="Przeszukaj bibliotekę..." bind:value />
+    <Search
+      placeholder="Przeszukaj bibliotekę..."
+      bind:value
+      autofocus={true}
+    />
     
     {#if value.length >= 3}
       <div class="search__results" transition:slide>
