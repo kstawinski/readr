@@ -52,7 +52,9 @@
 
       <Button
         kind="ghost"
-        iconDescription="Szukaj ksiązki"
+        iconDescription="Kliknij, aby wyszukać..."
+        hasIconOnly
+        tooltipPosition="top"
         icon={Search16}
       />
     </div>
