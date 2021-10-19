@@ -67,6 +67,8 @@
     left: 0;
     padding: 20px;
     width: 100%;
+    /* z-index pulls the menu to the top on desktop devices */
+    z-index: 9000;
   }
 
   :global(.books__footer::before) {
