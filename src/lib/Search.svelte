@@ -3,6 +3,7 @@
   export let open: boolean
 
   import { createEventDispatcher } from 'svelte'
+  import { slide } from 'svelte/transition'
   import {
     ComposedModal,
     ModalHeader,
@@ -30,7 +31,7 @@
     <Search placeholder="Przeszukaj bibliotekę..." bind:value />
     
     {#if value.length >= 3}
-      <div class="search__results">
+      <div class="search__results" transition:slide>
         {#each filter(books) as book}
           <div class="search__item">
             <Book {book} />
