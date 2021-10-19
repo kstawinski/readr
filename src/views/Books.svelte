@@ -22,6 +22,13 @@
     })
 
   const redirectToAddView = () => navigate('/add', { replace: true })
+
+  // On slash click while search is not visible
+  window.addEventListener('keyup', (event) => {
+    if (!isSearchVisible && event.code === 'Slash') {
+      isSearchVisible = true
+    }
+  });
 </script>
 
 <main>
@@ -62,7 +69,7 @@
 
       <Button
         kind="ghost"
-        iconDescription="Kliknij, aby wyszukać..."
+        iconDescription="Kliknij, aby wyszukać... (/)"
         hasIconOnly
         tooltipPosition="top"
         icon={Search16}
