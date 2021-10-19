@@ -69,7 +69,7 @@
 
       <Button
         kind="ghost"
-        iconDescription="Kliknij, aby wyszukać..."
+        iconDescription="Kliknij, aby wyszukać... (/)"
         hasIconOnly
         tooltipPosition="top"
         icon={Search16}
