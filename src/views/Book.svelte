@@ -25,6 +25,19 @@
       book = response
       isLoading = false
     })
+
+  import { doc, updateDoc } from 'firebase/firestore'
+  import { db } from '../firebase'
+  const editBook = () => {
+    const bookReference = doc(db, 'books', book.id)
+
+    delete book.id
+    updateDoc(bookReference, {
+      ...book
+    })
+      .then(() => alert('Edytowano poprawnie'))
+      .catch(() => alert('Wystąpił błąd 😢'))
+  }
 </script>
 
 <main>
@@ -51,12 +64,12 @@
               <FormGroup legendText="Podstawowe dane">
                 <div class="book__field"><TextInput placeholder="Tytuł" bind:value={book.title} /></div>
                 <div class="book__field"><TextInput placeholder="Autor" bind:value={book.author} /></div>
-                <div class="book__field"><TextInput placeholder="ISBN" bind:value={book.isbn} /></div>
+                <div class="book__field"><NumberInput hideSteppers placeholder="ISBN" bind:value={book.isbn} /></div>
               </FormGroup>
 
               <FormGroup legendText="Szczegóły">
-                <div class="book__field"><TextInput placeholder="Rok publikacji" bind:value={book.publishedAt} /></div>
-                <div class="book__field"><TextInput placeholder="Liczba stron" bind:value={book.pages} /></div>
+                <div class="book__field"><NumberInput hideSteppers placeholder="Rok publikacji" bind:value={book.publishedAt} /></div>
+                <div class="book__field"><NumberInput hideSteppers placeholder="Liczba stron" bind:value={book.pages} /></div>
               </FormGroup>
 
               <FormGroup legendText="Twoja ocena">
@@ -75,7 +88,10 @@
           </Row>
         </Grid>
       </ModalBody>
-      <ModalFooter primaryButtonText="Zapisz" secondaryButtonText="Anuluj" />
+      <ModalFooter>
+        <Button kind="secondary" on:click={() => open = false}>Anuluj</Button>
+        <Button kind="primary" on:click={() => editBook()}>Edytuj książkę</Button>
+      </ModalFooter>
     </ComposedModal>
 
     <Content>
