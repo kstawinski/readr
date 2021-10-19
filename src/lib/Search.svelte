@@ -3,8 +3,7 @@
     ComposedModal,
     ModalHeader,
     ModalBody,
-    ModalFooter,
-    Checkbox
+    Search
   } from 'carbon-components-svelte'
   export let books: BooksArray
   export let open: boolean
@@ -15,9 +14,8 @@
 </script>
 
 <ComposedModal bind:open on:close={() => dispatch('close')}>
-  <ModalHeader label="Wyszukiwarka" title="Wprowadź tytuł" />
+  <ModalHeader label="Wyszukiwarka" title="Czego szukasz?" />
   <ModalBody hasForm>
-    <Checkbox labelText="I have reviewed the changes" />
+    <Search placeholder="Przeszukaj bibliotekę..." />
   </ModalBody>
-  <ModalFooter primaryButtonText="Proceed" />
 </ComposedModal>
