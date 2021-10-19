@@ -40,6 +40,7 @@
 	 height: 170px;
 	 width: 100%;
 	 position: relative;
+   cursor: pointer;
 }
  .book__img {
 	 width: 100%;
