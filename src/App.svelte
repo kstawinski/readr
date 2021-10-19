@@ -44,6 +44,11 @@
     width: auto;
   }
 
+  :global(.bx--modal.is-visible) {
+    /* fix modal overlay position */
+    z-index: 10000;
+  }
+
   :global(.bx--side-nav__item:hover) {
     cursor: pointer;
   }

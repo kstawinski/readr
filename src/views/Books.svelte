@@ -4,6 +4,7 @@
   import { Books } from '../hooks/Books'
   import Header from '../lib/Header.svelte'
   import Book from '../lib/Book.svelte'
+  import Search from '../lib/Search.svelte'
 
   import BookmarkAdd16 from 'carbon-icons-svelte/lib/BookmarkAdd16'
   import Search16 from 'carbon-icons-svelte/lib/Search16'
@@ -12,6 +13,7 @@
 
   let books: BooksArray = []
   let isLoading = true
+  let isSearchVisible = false
   
   Books.getAllBooks()
     .then(booksArr => {
@@ -24,6 +26,14 @@
 
 <main>
   <Header title={PAGE_TITLE} />
+
+  {#if isSearchVisible}
+    <Search
+      {books}
+      open={isSearchVisible}
+      on:close={() => isSearchVisible = false}
+    />
+  {/if}
 
   {#if isLoading}
     <div class="loader">
@@ -56,6 +66,7 @@
         hasIconOnly
         tooltipPosition="top"
         icon={Search16}
+        on:click={() => isSearchVisible = true}
       />
     </div>
   </Content>
