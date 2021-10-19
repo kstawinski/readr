@@ -44,6 +44,10 @@
     width: auto;
   }
 
+  :global(.bx--side-nav__item:hover) {
+    cursor: pointer;
+  }
+
   @media (max-width: 500px) {
     :global(.bx--side-nav~.bx--content) {
       margin-left: 0 !important;
