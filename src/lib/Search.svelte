@@ -1,24 +1,23 @@
 <script lang="ts">
-  import { Modal } from 'carbon-components-svelte'
+  import {
+    ComposedModal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    Checkbox
+  } from 'carbon-components-svelte'
   export let books: BooksArray
   export let open: boolean
 
   import { createEventDispatcher } from 'svelte'
 
 	const dispatch = createEventDispatcher()
-
-	const close = () => dispatch('close')
 </script>
 
-<Modal
-  bind:open
-  modalHeading="Create database"
-  primaryButtonText="Confirm"
-  secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
-  on:open
-  on:close={close}
-  on:submit
->
-  <p>Create a new Cloudant database in the US South region.</p>
-</Modal>
+<ComposedModal bind:open on:close={() => dispatch('close')}>
+  <ModalHeader label="Wyszukiwarka" title="Wprowadź tytuł" />
+  <ModalBody hasForm>
+    <Checkbox labelText="I have reviewed the changes" />
+  </ModalBody>
+  <ModalFooter primaryButtonText="Proceed" />
+</ComposedModal>
