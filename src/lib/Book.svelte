@@ -29,6 +29,9 @@
 </div>
 
 <style>
+  .book {
+    max-width: 120px;
+  }
   .book__title {
 	 font-weight: 600;
 	 font-size: 105%;
