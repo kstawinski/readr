@@ -9,8 +9,8 @@
 </script>
 
 <div class="user">
-  <img src="{user.avatar}" alt="{user.name}" class="user__avatar">
-  <div>{user.name}</div>
+  <img src={ user.avatar } alt={ user.name } class="user__avatar">
+  <div>{ user.name }</div>
 </div>
 
 <style>
@@ -21,7 +21,6 @@
     margin-top: 20px;
     border-top: 1px solid #E7E7E5;
   }
-
   .user__avatar {
     margin-right: 10px;
     width: 24px;
