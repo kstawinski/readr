@@ -2,7 +2,12 @@
   export let id: string
 
   import { Books } from '../hooks/Books'
-  import { ImageLoader, InlineLoading, Content, Button, Column } from 'carbon-components-svelte'
+  import {
+    ImageLoader,
+    InlineLoading,
+    Content,
+    Button
+  } from 'carbon-components-svelte'
   import Header from '../lib/Header.svelte'
   import EditModal from '../lib/EditModal.svelte'
 
@@ -71,15 +76,12 @@
     margin: 20px auto;
     display: block;
   }
-
   .book__meta {
     text-align: center;
   }
-
   .book__metaItem:not(:last-child) {
     margin-bottom: 6px;
   }
-
   .book__metaItem-featured {
     font-weight: bold;
     font-size: 130%;
