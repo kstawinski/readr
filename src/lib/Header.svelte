@@ -1,4 +1,6 @@
 <script lang="ts">
+  export let title: string
+
   import {
     Header,
     SideNav,
@@ -11,15 +13,13 @@
 
   let isSideNavOpen = false
 
-  export let title: string
-
   const logout = () => {
     localStorage.clear()
     navigate('/login', { replace: true })
   }
 </script>
 
-<Header platformName="{ title }" bind:isSideNavOpen>
+<Header platformName={ title } bind:isSideNavOpen>
   <div slot="skip-to-content">
     <SkipToContent />
   </div>
