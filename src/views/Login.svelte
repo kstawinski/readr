@@ -1,10 +1,10 @@
 <script lang="ts">
   const PAGE_TITLE: string = 'Zaloguj się'
 
+  import { navigate } from 'svelte-routing'
   import { Auth } from '../hooks/Auth'
   import { Store } from '../hooks/Store'
-  import { navigate } from 'svelte-routing'
-  import { ButtonSet, Button } from 'carbon-components-svelte'
+  import { Button } from 'carbon-components-svelte'
   import LogoGoogle16 from 'carbon-icons-svelte/lib/LogoGoogle16'
 
   const login = () => {
@@ -45,11 +45,9 @@
   .login__title {
     font-size: 2.225rem;
   }
-
   .login__paragraph {
     margin: 15px 0 30px 0;
   }
-
   .login__content {
     margin: 0 2rem;
     display: flex;
@@ -57,7 +55,6 @@
     justify-content: center;
     min-height: 100vh;
   }
-
   .login__illustration {
     max-width: 300px;
     height: auto;
@@ -65,7 +62,6 @@
     animation-name: fade-top;
     animation-duration: 3s;
   }
-
   .login__fadeAnimation {
     animation-name: fade;
     animation-duration: 1s;

@@ -33,7 +33,7 @@
       bind:value
       autofocus={true}
     />
-    
+
     {#if value.length >= 3}
       <div class="search__results" transition:slide>
         {#each filter(books) as book}
@@ -47,17 +47,15 @@
 </ComposedModal>
 
 <style>
+  :global(.bx--modal-content) {
+    margin-bottom: 1rem !important;
+  }
   .search__results {
     margin-top: 1rem;
     display: flex;
     flex-wrap: wrap;
   }
-
   .search__item {
     padding: .5rem;
-  }
-
-  :global(.bx--modal-content) {
-    margin-bottom: 1rem !important;
   }
 </style>

@@ -1,6 +1,6 @@
 <script>
   import { InlineNotification } from 'carbon-components-svelte'
-import { navigate } from 'svelte-routing';
+  import { navigate } from 'svelte-routing'
 
   navigate('/login', { replace: true })
 </script>
