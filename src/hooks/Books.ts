@@ -11,10 +11,14 @@ export const Books = {
       where('uid', '==', UID)
     )
 
-    getDocs(booksRef).then(qSnap => {
-      const booksArray: BooksArray = qSnap.docs.map(d => (<Book>{ id: d.id, ...d.data() }))
-      resolve(booksArray)
-    })
+    getDocs(booksRef)
+      .then(qSnap => {
+        const booksArray: BooksArray = qSnap.docs.map(d => (<Book>{ id: d.id, ...d.data() }))
+        resolve(booksArray)
+      })
+      .catch(error => {
+        reject(error)
+      })
   }),
 
   getBook: (id: string) => new Promise((resolve: (value: Book) => void, reject) => {
@@ -23,6 +27,9 @@ export const Books = {
         resolve(
           books.filter(book => book.id === id)[0]
         )
+      })
+      .catch(error => {
+        reject(error)
       })
   })
 }
