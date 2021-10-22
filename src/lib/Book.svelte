@@ -1,6 +1,7 @@
 <script lang="ts">
   export let book: Book
   import { navigate } from 'svelte-routing'
+  import Rating from '../lib/Rating.svelte'
 
   const redirectToBook = () => navigate(
     `/book/${ book.id }`,
@@ -17,6 +18,9 @@
   </div>
 
   <div class="book__text">
+    {#if book.rate}
+      <Rating rate={ book.rate } />
+    {/if}
     <div class="book__title">{ book.title }</div>
     <div class="book__author">{ book.author }</div>
   </div>
