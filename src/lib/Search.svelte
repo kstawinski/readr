@@ -34,7 +34,7 @@
       autofocus={true}
     />
 
-    {#if value.length >= 3}
+    {#if value.length >= 3 && filter(books).length > 0}
       <div class="search__results" transition:slide>
         {#each filter(books) as book}
           <div class="search__item">
