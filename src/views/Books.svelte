@@ -21,8 +21,6 @@
       isLoading = false
     })
 
-  const redirectToAddView = () => navigate('/add', { replace: true })
-
   // On slash click while search is not visible
   window.addEventListener('keyup', (event) => {
     if (!isSearchVisible && event.code === 'Slash') {
@@ -64,7 +62,7 @@
       <Button
         icon={BookmarkAdd16}
         kind="secondary"
-        on:click={redirectToAddView}
+        on:click={() => navigate('/add')}
       >Dodaj kolejną książkę</Button>
 
       <Button

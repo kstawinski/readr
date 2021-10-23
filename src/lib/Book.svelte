@@ -4,8 +4,7 @@
   import Rating from '../lib/Rating.svelte'
 
   const redirectToBook = () => navigate(
-    `/book/${ book.id }`,
-    { replace: true }
+    `/book/${ book.id }`
   )
 </script>
 
