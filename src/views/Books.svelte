@@ -78,16 +78,28 @@
   {/if}
 </main>
 
-<style>
-  .books__footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    padding: 20px;
-    width: 100%;
-    /* z-index pulls the menu to the top on desktop devices */
-    z-index: 9000;
+<style lang="scss">
+  .books {
+    &__footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      padding: 20px;
+      width: 100%;
+      /* z-index pulls the menu to the top on desktop devices */
+      z-index: 9000;
+    }
+    &__item {
+      max-width: 31%;
+      padding: 5px;
+    }
+    &__list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
   }
+
   :global(.books__footer::before) {
     background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgb(255 255 255 / 52%) 25%, rgba(255,255,255,0) 100%);
     width: 100%;
@@ -96,14 +108,5 @@
     position: absolute;
     bottom: 0;
     left: 0;
-  }
-  .books__item {
-    max-width: 31%;
-    padding: 5px;
-  }
-  .books__list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
   }
 </style>

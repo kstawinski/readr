@@ -136,7 +136,25 @@
   </Content>
 </main>
 
-<style>
+<style lang="scss">
+  .add {
+    &__notification {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+    }
+    &__field {
+      margin: 15px 0 25px 0;
+    }
+    &__footer {
+      display: flex;
+      align-items: center;
+    }
+    &__loader {
+      margin-left: 10px;
+    }
+  }
+
   @media (max-width: 500px) {
     :global(.add__container) {
       display: flex;
@@ -145,28 +163,8 @@
       height: calc(100vh - 3rem);
     }
   }
-
-  .add__notification {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-  }
-
   :global(.add__notification > div:first-child) {
     margin: 0;
     max-width: 100%;
-  }
-
-  .add__field {
-    margin: 15px 0 25px 0;
-  }
-
-  .add__footer {
-    display: flex;
-    align-items: center;
-  }
-
-  .add__loader {
-    margin-left: 10px;
   }
 </style>

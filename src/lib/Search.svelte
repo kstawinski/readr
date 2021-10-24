@@ -46,16 +46,19 @@
   </ModalBody>
 </ComposedModal>
 
-<style>
+<style lang="scss">
+  .search {
+    &__results {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    &__item {
+      padding: .5rem;
+    }
+  }
+
   :global(.bx--modal-content) {
     margin-bottom: 1rem !important;
-  }
-  .search__results {
-    margin-top: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .search__item {
-    padding: .5rem;
   }
 </style>

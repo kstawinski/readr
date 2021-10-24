@@ -14,16 +14,15 @@
   </div>
 </div>
 
-<style>
+<style lang="scss">
   .rating {
     display: flex;
     align-items: center;
-  }
 
-  .rating__value {
-    font-weight: 600;
-    margin-left: 5px;
-    /* font-size: 12px; */
+    &__value {
+      font-weight: 600;
+      margin-left: 5px;
+    }
   }
 
   :global(.rating__icon) {
