@@ -41,30 +41,32 @@
   </div>
 </main>
 
-<style>
-  .login__title {
-    font-size: 2.225rem;
-  }
-  .login__paragraph {
-    margin: 15px 0 30px 0;
-  }
-  .login__content {
-    margin: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-  }
-  .login__illustration {
-    max-width: 300px;
-    height: auto;
-    margin-bottom: 50px;
-    animation-name: fade-top;
-    animation-duration: 3s;
-  }
-  .login__fadeAnimation {
-    animation-name: fade;
-    animation-duration: 1s;
+<style lang="scss">
+  .login {
+    &__title {
+      font-size: 2.225rem;
+    }
+    &__paragraph {
+      margin: 15px 0 30px 0;
+    }
+    &__content {
+      margin: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    &__illustration {
+      max-width: 300px;
+      height: auto;
+      margin-bottom: 50px;
+      animation-name: fade-top;
+      animation-duration: 3s;
+    }
+    &__fadeAnimation {
+      animation-name: fade;
+      animation-duration: 1s;
+    }
   }
 
   @keyframes fade-top {

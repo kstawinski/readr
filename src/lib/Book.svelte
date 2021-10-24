@@ -25,33 +25,34 @@
   </div>
 </div>
 
-<style>
+<style lang="scss">
   .book {
     max-width: 120px;
-  }
-  .book__title {
-    font-weight: 600;
-    font-size: 105%;
-  }
-  .book__thumbnail {
-    height: 170px;
-    width: 100%;
-    position: relative;
-    cursor: pointer;
-  }
-  .book__img {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center center;
-  }
-  .book__text {
-    line-height: 1.3;
-    margin: 10px 5px;
-  }
-  .book__author {
-    margin-top: 5px;
-    font-size: 95%;
-    opacity: 0.9;
+
+    &__title {
+      font-weight: 600;
+      font-size: 105%;
+    }
+    &__thumbnail {
+      height: 170px;
+      width: 100%;
+      position: relative;
+      cursor: pointer;
+    }
+    &__img {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center center;
+    }
+    &__text {
+      line-height: 1.3;
+      margin: 10px 5px;
+    }
+    &__author {
+      margin-top: 5px;
+      font-size: 95%;
+      opacity: 0.9;
+    }
   }
 </style>

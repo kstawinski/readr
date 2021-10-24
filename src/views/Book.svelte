@@ -63,27 +63,31 @@
   {/if}
 </main>
 
-<style>
-  :global(.book__field) {
-    margin-bottom: 5px;
-  }
+<style lang="scss">
   .book {
     margin-top: 2.5rem;
+
+    &__thumbnail {
+      width: 50%;
+      max-width: 220px;
+      margin: 20px auto;
+      display: block;
+    }
+    &__meta {
+      text-align: center;
+    }
+    &__metaItem {
+      &:not(:last-child) {
+        margin-bottom: 6px;
+      }
+      &-featured {
+        font-weight: bold;
+        font-size: 130%;
+      }
+    }
   }
-  .book__thumbnail {
-    width: 50%;
-    max-width: 220px;
-    margin: 20px auto;
-    display: block;
-  }
-  .book__meta {
-    text-align: center;
-  }
-  .book__metaItem:not(:last-child) {
-    margin-bottom: 6px;
-  }
-  .book__metaItem-featured {
-    font-weight: bold;
-    font-size: 130%;
+
+  :global(.book__field) {
+    margin-bottom: 5px;
   }
 </style>
