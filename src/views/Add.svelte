@@ -34,7 +34,7 @@
     if (ISBN && ISBN.toString().length === 13) {
       isFetching = true
       axios.get(
-        `https://cors-anywhere.herokuapp.com/https://data.bn.org.pl/api/bibs.json?isbnIssn=${ISBN}`,
+        `https://evening-citadel-78750.herokuapp.com/https://data.bn.org.pl/api/bibs.json?isbnIssn=${ISBN}`,
         { timeout: 10000 })
         .then(data => data.data.bibs[0])
         .then(book => {
