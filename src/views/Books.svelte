@@ -33,7 +33,7 @@
     }
   });
 
-  const updateFilters = (options) => {
+  const updateFilters = (options: SortingOptions) => {
     isSortingVisible = false
 
     const booksArray = options.showOnlyReaded ?
