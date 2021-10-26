@@ -30,6 +30,22 @@
     id: ''
   }
 
+  const searchUsingGoogleBooks = () => new Promise((resolve, reject) => {
+    if (ISBN && ISBN.toString().length === 13) {
+      isFetching = true
+      axios.get(
+        `https://evening-citadel-78750.herokuapp.com/https://www.googleapis.com/books/v1/volumes?q=isbn:${ISBN}`,
+        { timeout: 10000 })
+        .then(data => data.data.items[0].volumeInfo)
+        .then(book => {
+          console.log(book)
+          resolve(book)
+          isFetching = false
+        })
+        .catch(error => reject(error))
+    }
+  })
+
   const searchUsingISBN = () => new Promise((resolve, reject) => {
     if (ISBN && ISBN.toString().length === 13) {
       isFetching = true
@@ -77,9 +93,30 @@
           })
           .catch(error => console.error(error))
       })
-      .catch(error => {
-        alert('Nie udalo sie pobrac danych')
-        console.warn(error)
+      .catch(() => {
+        // second fetch using Google Books
+        searchUsingGoogleBooks()
+          .then(({ authors, publishedDate, title }) => {
+            const book = {
+              uid: Store.getItem('uid'),
+              isbn: Number(ISBN),
+              title: title,
+              author: authors[0],
+              thumbnail: `https://covers.openlibrary.org/b/isbn/${ISBN}-L.jpg`,
+              addDate: new Date(),
+              publishedAt: Number(publishedDate)
+            }
+
+            // submit book
+            addDoc(collection(db, 'books'), book)
+              .then(({ id }) => {
+                console.log(`Document ID: ${id}`)
+                notification.id = id
+                notification.isVisible = true
+              })
+              .catch(error => console.error(error))
+          })
+          .catch(error => console.error(error))
       })
   })
 </script>
