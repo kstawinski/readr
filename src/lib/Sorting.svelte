@@ -9,7 +9,7 @@
     SelectItem
   } from 'carbon-components-svelte'
 
-  let form = {
+  let form: SortingOptions = {
     sortingMethod: '',
     showOnlyReaded: false
   }
