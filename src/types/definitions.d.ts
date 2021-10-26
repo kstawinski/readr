@@ -22,4 +22,9 @@ interface Collection {
   lastModifiedDate?: string
 }
 
+interface SortingOptions {
+  sortingMethod: string
+  showOnlyReaded: boolean
+}
+
 type BooksArray = Array<Book>
