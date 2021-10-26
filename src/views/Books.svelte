@@ -5,19 +5,24 @@
   import Header from '../lib/Header.svelte'
   import Book from '../lib/Book.svelte'
   import Search from '../lib/Search.svelte'
+  import Sorting from '../lib/Sorting.svelte'
 
   import BookmarkAdd16 from 'carbon-icons-svelte/lib/BookmarkAdd16'
   import Search16 from 'carbon-icons-svelte/lib/Search16'
+  import SortDescending16 from 'carbon-icons-svelte/lib/SortDescending16'
   import { Grid, Row, Column, Button, Content, InlineLoading } from 'carbon-components-svelte'
   import { navigate } from 'svelte-routing'
 
   let books: BooksArray = []
+  let booksUnmodifiedArray: BooksArray = []
   let isLoading = true
   let isSearchVisible = false
+  let isSortingVisible = false
   
   Books.getAllBooks()
     .then(booksArr => {
       books = booksArr
+      booksUnmodifiedArray = booksArr
       isLoading = false
     })
 
@@ -27,6 +32,39 @@
       isSearchVisible = true
     }
   });
+
+  const updateFilters = (options: SortingOptions) => {
+    isSortingVisible = false
+
+    const booksArray = options.showOnlyReaded ?
+      booksUnmodifiedArray.filter(book => book.rate)
+      : booksUnmodifiedArray
+
+    switch (options.sortingMethod) {
+      case 'title':
+        books = booksArray.sort((a, b) => a.title.localeCompare(b.title))
+        break;
+      case 'author':
+        books = booksArray.sort((a, b) => a.author.localeCompare(b.author))
+        break;
+      case 'ratingAsc':
+        books = booksArray.sort((a, b) => a.rate - b.rate)
+        break;
+      case 'ratingDes':
+        books = booksArray.sort((a, b) => b.rate - a.rate)
+        break;
+      case 'addAsc':
+        books = booksArray.sort((a, b) => Number(a.addDate) - Number(b.addDate))
+        break;
+      case 'addDes':
+        books = booksArray.sort((a, b) => Number(b.addDate) - Number(a.addDate))
+        break;
+      default:
+        // sort by title
+        books = booksArray.sort((a, b) => a.title.localeCompare(b.title))
+        break;
+    }
+  }
 </script>
 
 <main>
@@ -37,6 +75,14 @@
       {books}
       open={isSearchVisible}
       on:close={() => isSearchVisible = false}
+    />
+  {/if}
+
+  {#if isSortingVisible}
+    <Sorting
+      open={isSortingVisible}
+      on:close={() => isSortingVisible = false}
+      on:change={({ detail }) => updateFilters(detail)}
     />
   {/if}
 
@@ -72,6 +118,15 @@
         tooltipPosition="top"
         icon={Search16}
         on:click={() => isSearchVisible = true}
+      />
+
+      <Button
+        kind="ghost"
+        iconDescription="Opcje sortowania"
+        hasIconOnly
+        tooltipPosition="top"
+        icon={SortDescending16}
+        on:click={() => isSortingVisible = true}
       />
     </div>
   </Content>
