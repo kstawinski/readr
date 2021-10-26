@@ -14,6 +14,8 @@
     showOnlyReaded: false
   }
 
+  let isCheckboxDisabled = false
+
   const sortingOptions = [
     { id: 'title', text: 'Tytułu (alfabetycznie)' },
     { id: 'author', text: 'Autora (alfabetycznie)' },
@@ -24,6 +26,17 @@
   ]
 
 	const dispatch = createEventDispatcher()
+
+  const isRatingRequired = () => {
+    const ratingSortMethods = ['ratingAsc', 'ratingDes']
+    
+    if (ratingSortMethods.includes(form.sortingMethod)) {
+      form.showOnlyReaded = true
+      isCheckboxDisabled = true
+    } else {
+      isCheckboxDisabled = false
+    }
+  }
 </script>
 
 <Modal
@@ -39,7 +52,11 @@
   on:submit={ () => dispatch('change', form) }
 >
   <div class="sorting__field">
-    <Select labelText="Sortuj według" bind:selected={ form.sortingMethod }>
+    <Select
+      labelText="Sortuj według"
+      bind:selected={ form.sortingMethod }
+      on:change={ () => isRatingRequired() }
+    >
       {#each sortingOptions as option}
         <SelectItem value={ option.id } text={ option.text } /> 
       {/each}
@@ -50,6 +67,7 @@
     <Checkbox
       labelText="Wyświetlaj tylko przeczytane pozycje (ocenione)"
       bind:checked={ form.showOnlyReaded }
+      disabled={ isCheckboxDisabled }
     />
   </div>
 </Modal>
