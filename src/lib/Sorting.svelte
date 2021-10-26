@@ -15,14 +15,12 @@
   }
 
   const sortingOptions = [
-    { id: '0', text: 'Tytułu' },
-    { id: '1', text: 'Autora' },
-    { id: '2', text: 'Oceny książki (od najsłabszych)' },
-    { id: '3', text: 'Oceny książki (od najlepszych)' },
-    { id: '4', text: 'Daty dodania (rosnąco)' },
-    { id: '5', text: 'Daty dodania (malejąco)' },
-    { id: '6', text: 'Daty edycji (rosnąco)' },
-    { id: '7', text: 'Daty edycji (malejąco)' }
+    { id: 'title', text: 'Tytułu (alfabetycznie)' },
+    { id: 'author', text: 'Autora (alfabetycznie)' },
+    { id: 'ratingAsc', text: 'Oceny książki (od najsłabszych)' },
+    { id: 'ratingDes', text: 'Oceny książki (od najlepszych)' },
+    { id: 'addAsc', text: 'Daty dodania (rosnąco)' },
+    { id: 'addDes', text: 'Daty dodania (malejąco)' }
   ]
 
 	const dispatch = createEventDispatcher()
