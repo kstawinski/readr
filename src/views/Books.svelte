@@ -14,6 +14,7 @@
   import { navigate } from 'svelte-routing'
 
   let books: BooksArray = []
+  let booksUnmodifiedArray: BooksArray = []
   let isLoading = true
   let isSearchVisible = false
   let isSortingVisible = false
@@ -21,6 +22,7 @@
   Books.getAllBooks()
     .then(booksArr => {
       books = booksArr
+      booksUnmodifiedArray = booksArr
       isLoading = false
     })
 
@@ -30,6 +32,39 @@
       isSearchVisible = true
     }
   });
+
+  const updateFilters = (options) => {
+    isSortingVisible = false
+
+    const booksArray = options.showOnlyReaded ?
+      booksUnmodifiedArray.filter(book => book.rate)
+      : booksUnmodifiedArray
+
+    switch (options.sortingMethod) {
+      case 'title':
+        books = booksArray.sort((a, b) => a.title.localeCompare(b.title))
+        break;
+      case 'author':
+        books = booksArray.sort((a, b) => a.author.localeCompare(b.author))
+        break;
+      case 'ratingAsc':
+        books = booksArray.sort((a, b) => a.rate - b.rate)
+        break;
+      case 'ratingDes':
+        books = booksArray.sort((a, b) => b.rate - a.rate)
+        break;
+      case 'addAsc':
+        books = booksArray.sort((a, b) => Number(a.addDate) - Number(b.addDate))
+        break;
+      case 'addDes':
+        books = booksArray.sort((a, b) => Number(b.addDate) - Number(a.addDate))
+        break;
+      default:
+        // sort by title
+        books = booksArray.sort((a, b) => a.title.localeCompare(b.title))
+        break;
+    }
+  }
 </script>
 
 <main>
@@ -47,6 +82,7 @@
     <Sorting
       open={isSortingVisible}
       on:close={() => isSortingVisible = false}
+      on:change={({ detail }) => updateFilters(detail)}
     />
   {/if}
 
