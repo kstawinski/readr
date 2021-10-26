@@ -42,13 +42,12 @@
 <Modal
   bind:open
   size="sm"
+  hasForm
   modalHeading="Ustawienia sortowania"
   primaryButtonText="Zapisz ustawienia"
   secondaryButtonText="Anuluj"
   on:click:button--secondary={ () => open = false }
-  on:open
   on:close={ () => dispatch('close') }
-  hasForm
   on:submit={ () => dispatch('change', form) }
 >
   <div class="sorting__field">
