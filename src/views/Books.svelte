@@ -72,7 +72,7 @@
 
   {#if isSearchVisible}
     <Search
-      {books}
+      books={booksUnmodifiedArray}
       open={isSearchVisible}
       on:close={() => isSearchVisible = false}
     />
