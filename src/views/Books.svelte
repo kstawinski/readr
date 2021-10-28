@@ -91,45 +91,41 @@
       <InlineLoading />
     </div>
   {:else}
-  <Content>
-    <Grid>
-      <Row>
-        <div class="books__list">
-          {#each books as book}
-            <div class="books__item">
-              <Book {book} />
-            </div>
-          {/each}
+    <Content>
+      <div class="books__list">
+        {#each books as book}
+          <div class="books__item">
+            <Book {book} />
+          </div>
+        {/each}
       </div>
-      </Row>
-    </Grid>
 
-    <div class="books__footer">
-      <Button
-        icon={BookmarkAdd16}
-        kind="secondary"
-        on:click={() => navigate('/add')}
-      >Dodaj kolejną książkę</Button>
+      <div class="books__footer">
+        <Button
+          icon={BookmarkAdd16}
+          kind="secondary"
+          on:click={() => navigate('/add')}
+        >Dodaj kolejną książkę</Button>
 
-      <Button
-        kind="ghost"
-        iconDescription="Kliknij, aby wyszukać... (/)"
-        hasIconOnly
-        tooltipPosition="top"
-        icon={Search16}
-        on:click={() => isSearchVisible = true}
-      />
+        <Button
+          kind="ghost"
+          iconDescription="Kliknij, aby wyszukać... (/)"
+          hasIconOnly
+          tooltipPosition="top"
+          icon={Search16}
+          on:click={() => isSearchVisible = true}
+        />
 
-      <Button
-        kind="ghost"
-        iconDescription="Opcje sortowania"
-        hasIconOnly
-        tooltipPosition="top"
-        icon={SortDescending16}
-        on:click={() => isSortingVisible = true}
-      />
-    </div>
-  </Content>
+        <Button
+          kind="ghost"
+          iconDescription="Opcje sortowania"
+          hasIconOnly
+          tooltipPosition="top"
+          icon={SortDescending16}
+          on:click={() => isSortingVisible = true}
+        />
+      </div>
+    </Content>
   {/if}
 </main>
 
@@ -145,13 +141,12 @@
       z-index: 9000;
     }
     &__item {
-      max-width: 31%;
-      padding: 5px;
+      width: 120px;
     }
     &__list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 100px) minmax(100px, max-content);
+      grid-gap: 40px;
     }
   }
 

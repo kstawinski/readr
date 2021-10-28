@@ -27,7 +27,7 @@
 
 <style lang="scss">
   .book {
-    max-width: 120px;
+    width: 120px;
 
     &__title {
       font-weight: 600;
