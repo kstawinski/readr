@@ -1,10 +1,12 @@
 <script lang="ts">
   const PAGE_TITLE: string = 'Lista kolekcji'
 
+  // import { navigate } from 'svelte-routing'
   import { onMount } from 'svelte'
   import {
     InlineLoading,
-    Content
+    Content,
+    Tile
   } from 'carbon-components-svelte'
   import { Collections } from '../hooks/Collections'
   import Header from '../lib/Header.svelte'
@@ -26,7 +28,9 @@
 
   <Content>
     {#each collections as collection}
-      { collection.text }
+      <Tile class="collections__tile">
+        { collection.text }
+      </Tile>
     {:else}
       <div class="loader">
         <InlineLoading />
@@ -34,3 +38,13 @@
     {/each}
   </Content>
 </main>
+
+<style lang="scss" global>
+  .collections {
+    &__tile {
+      &:not(:last-child) {
+        margin-bottom: 5px;
+      }
+    }
+  }
+</style>
