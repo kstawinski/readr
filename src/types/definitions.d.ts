@@ -18,7 +18,7 @@ interface Book {
 interface Collection {
   id: string
   uid: string
-  name: string
+  text: string
   lastModifiedDate?: string
 }
 
@@ -27,4 +27,4 @@ interface SortingOptions {
   showOnlyReaded: boolean
 }
 
-type BooksArray = Array<Book>
+type BooksArray = Array<Book>type BooksArray = Array<Book>
