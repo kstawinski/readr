@@ -3,6 +3,7 @@
   export let open: boolean
 
   import { createEventDispatcher } from 'svelte'
+  import { Collections } from '../hooks/Collections'
   import { doc, updateDoc } from 'firebase/firestore'
   import { db } from '../firebase'
   import {
@@ -18,7 +19,8 @@
     TextArea,
     NumberInput,
     ImageLoader,
-    Button
+    Button,
+    MultiSelect
   } from 'carbon-components-svelte'
 
   const dispatch = createEventDispatcher()
@@ -33,6 +35,12 @@
       .then(() => alert('Edytowano poprawnie'))
       .catch(() => alert('Wystąpił błąd 😢'))
   }
+
+  let collections: CollectionsArray
+
+  Collections.getAll()
+    .then(response => collections = response)
+    .catch(error => alert(error))
 </script>
 
 <ComposedModal bind:open on:close={() => dispatch('close')}>
@@ -50,6 +58,19 @@
             <div class="book__field"><TextInput placeholder="Tytuł" bind:value={book.title} /></div>
             <div class="book__field"><TextInput placeholder="Autor" bind:value={book.author} /></div>
             <div class="book__field"><NumberInput hideSteppers placeholder="ISBN" bind:value={book.isbn} /></div>
+          </FormGroup>
+
+          <FormGroup>
+            <div class="book__field">
+              <MultiSelect
+                titleText="Kolekcje"
+                placeholder="Znajdź i dodaj kolekcję..."
+                items={collections}
+                bind:selectedIds={book.collections}
+                spellcheck="false"
+                filterable
+              />
+            </div>
           </FormGroup>
 
           <FormGroup legendText="Szczegóły">
