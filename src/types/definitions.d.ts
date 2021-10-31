@@ -27,4 +27,5 @@ interface SortingOptions {
   showOnlyReaded: boolean
 }
 
-type BooksArray = Array<Book>type BooksArray = Array<Book>
+type BooksArray = Array<Book>
+type CollectionsArray = Array<Collection>
