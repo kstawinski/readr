@@ -1,5 +1,5 @@
 import { db } from '../firebase'
-import { collection, getDocs, where, query } from 'firebase/firestore'
+import { collection, getDocs, where, query, addDoc } from 'firebase/firestore'
 import { Store } from './Store'
 
 const UID = Store.getItem('uid')
@@ -19,5 +19,14 @@ export const Collections = {
       .catch(error => {
         reject(error)
       })
+  }),
+
+  create: (name: string) => new Promise((resolve: (value: boolean) => void, reject) => {
+    addDoc(collection(db, 'collections'), {
+      text: name,
+      uid: UID
+    })
+      .then(() => resolve(true))
+      .catch(error => reject(error))
   })
 }

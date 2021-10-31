@@ -5,6 +5,7 @@
   import Books from './views/Books.svelte'
   import Add from './views/Add.svelte'
   import Book from './views/Book.svelte'
+  import Collections from './views/Collections.svelte'
   import { Auth } from './hooks/Auth'
 
   export let url = ''
@@ -23,6 +24,7 @@
     <AuthProxy path="/books" component={Books} />
     <AuthProxy path="/add" component={Add} />
     <AuthProxy path="/book/:id" component={Book} />
+    <AuthProxy path="/collections" component={Collections} />
   </Router>
 </div>
 

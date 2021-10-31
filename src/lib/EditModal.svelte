@@ -30,7 +30,8 @@
 
     delete book.id
     updateDoc(bookReference, {
-      ...book
+      ...book,
+      lastModifiedDate: new Date()
     })
       .then(() => alert('Edytowano poprawnie'))
       .catch(() => alert('Wystąpił błąd 😢'))
