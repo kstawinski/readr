@@ -12,15 +12,27 @@
     ModalHeader,
     ModalBody,
     ModalFooter,
-    TextInput
+    TextInput,
+    OrderedList,
+    ListItem
   } from 'carbon-components-svelte'
   import FolderAdd16 from 'carbon-icons-svelte/lib/FolderAdd16'
+  import { Books } from '../hooks/Books'
   import { Collections } from '../hooks/Collections'
   import Header from '../lib/Header.svelte'
+  import { Link } from 'svelte-routing'
 
+  let books: BooksArray = []
   let collections: CollectionsArray = []
   let isAddModalVisible = false
   let collectionName = ''
+
+  const fetchBooks = () => {
+    Books.getAllBooks()
+      .then(response => {
+        books = response
+      })
+  }
 
   const fetchCollections = () => {
     Collections.getAll()
@@ -29,7 +41,10 @@
       })
   }
 
-  onMount(() => fetchCollections())
+  onMount(() => {
+    fetchBooks()
+    fetchCollections()
+  })
 
   const addCollection = (name: string) => {
     Collections.create(name)
@@ -39,6 +54,8 @@
       })
       .catch(error => console.error(error))
   }
+
+  const collectionFilter = (id: string) => books.filter(book => (book.collections || []).includes(id))
 </script>
 
 <main>
@@ -69,7 +86,17 @@
   <Content>
     {#each collections as collection}
       <Tile class="collections__tile">
-        { collection.text }
+        <div class="collections__title">{ collection.text }</div>
+
+        <OrderedList class="collections__list">
+          {#each collectionFilter(collection.id) as book}
+            <ListItem>
+              <Link to={`/book/${book.id}`}>
+                { book.title } ({ book.author })
+              </Link>
+            </ListItem>
+          {/each}
+        </OrderedList>
       </Tile>
     {:else}
       <div class="loader">
@@ -102,6 +129,12 @@
       width: 100%;
       /* z-index pulls the menu to the top on desktop devices */
       z-index: 9000;
+    }
+    &__title {
+      font-weight: 600;
+    }
+    &__list {
+      margin: 15px 0 0 30px;
     }
   }
 </style>
