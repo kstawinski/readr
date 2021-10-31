@@ -5,21 +5,26 @@ interface Book {
   title: string
   author: string
   thumbnail: string
-  addDate: string
+  addDate: Timestamp
   collections?: Array<string>
   isReaded?: boolean
-  lastModifiedDate?: string
+  lastModifiedDate?: Timestamp
   pages?: number
   publishedAt?: number
   rate?: number
   description?: string
 }
 
+interface Timestamp {
+  seconds: string
+  nanoseconds: string
+}
+
 interface Collection {
   id: string
   uid: string
   text: string
-  lastModifiedDate?: string
+  lastModifiedDate?: Timestamp
 }
 
 interface SortingOptions {
