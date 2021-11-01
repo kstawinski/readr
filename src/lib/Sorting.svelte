@@ -16,21 +16,21 @@
 
   let isCheckboxDisabled = false
 
-  const sortingOptions = [
-    { id: 'title', text: 'Tytułu (alfabetycznie)' },
-    { id: 'author', text: 'Autora (alfabetycznie)' },
-    { id: 'ratingAsc', text: 'Oceny książki (od najsłabszych)' },
-    { id: 'ratingDes', text: 'Oceny książki (od najlepszych)' },
-    { id: 'addAsc', text: 'Daty dodania (rosnąco)' },
-    { id: 'addDes', text: 'Daty dodania (malejąco)' }
+  const sortingMethods = [
+    { id: 'title', name: 'Tytułu (alfabetycznie)' },
+    { id: 'author', name: 'Autora (alfabetycznie)' },
+    { id: 'ratingAsc', name: 'Oceny książki (od najsłabszych)' },
+    { id: 'ratingDes', name: 'Oceny książki (od najlepszych)' },
+    { id: 'addAsc', name: 'Daty dodania (rosnąco)' },
+    { id: 'addDes', name: 'Daty dodania (malejąco)' }
   ]
 
 	const dispatch = createEventDispatcher()
 
   const isRatingRequired = () => {
-    const ratingSortMethods = ['ratingAsc', 'ratingDes']
-    
-    if (ratingSortMethods.includes(form.sortingMethod)) {
+    const sortingRequiringEvaluation = ['ratingAsc', 'ratingDes']
+
+    if (sortingRequiringEvaluation.includes(form.sortingMethod)) {
       form.showOnlyReaded = true
       isCheckboxDisabled = true
     } else {
@@ -56,8 +56,8 @@
       bind:selected={ form.sortingMethod }
       on:change={ () => isRatingRequired() }
     >
-      {#each sortingOptions as option}
-        <SelectItem value={ option.id } text={ option.text } /> 
+      {#each sortingMethods as method}
+        <SelectItem value={ method.id } text={ method.name } /> 
       {/each}
     </Select>
   </div>
