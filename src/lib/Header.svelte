@@ -10,14 +10,25 @@
   } from 'carbon-components-svelte'
   import { navigate } from 'svelte-routing'
   import ProfileBar from '../lib/ProfileBar.svelte'
+  import Modal from '../lib/Modal.svelte'
+  import AddModal from '../lib/AddModal.svelte'
 
   let isSideNavOpen = false
+  let isAddModalOpen = false
 
   const logout = () => {
     localStorage.clear()
     navigate('/login', { replace: true })
   }
 </script>
+
+{#if isAddModalOpen}
+  <AddModal
+    label="Nowa książka" title="Dodaj przez ISBN"
+    open={ isAddModalOpen }
+    on:close={ () => isAddModalOpen = false }
+  />
+{/if}
 
 <Header platformName={ title } bind:isSideNavOpen>
   <div slot="skip-to-content">
@@ -34,7 +45,7 @@
 
     <SideNavLink
       text="Dodaj książkę"
-      on:click={ () => navigate('/add') }
+      on:click={ () => isAddModalOpen = true }
     />
 
     <SideNavLink
