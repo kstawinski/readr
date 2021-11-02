@@ -4,13 +4,9 @@
 
   import { createEventDispatcher } from 'svelte'
   import { slide } from 'svelte/transition'
-  import {
-    ComposedModal,
-    ModalHeader,
-    ModalBody,
-    Search
-  } from 'carbon-components-svelte'
+  import { Search } from 'carbon-components-svelte'
   import Book from '../lib/Book.svelte'
+  import Modal from '../lib/Modal.svelte'
 
   let value = ''
 
@@ -23,11 +19,15 @@
       || book.author.toLowerCase().includes(searchValue)
     )
   }
+
+  const closeModal = () => {
+    open = false
+    dispatch('close')
+  }
 </script>
 
-<ComposedModal bind:open on:close={() => dispatch('close')}>
-  <ModalHeader label="Wyszukiwarka" title="Czego szukasz?" />
-  <ModalBody hasForm>
+<Modal {open} label="Wyszukiwarka" title="Czego szukasz?" on:close={ () => closeModal() }>
+  <svelte:fragment slot="content">
     <Search
       placeholder="Przeszukaj bibliotekę..."
       bind:value
@@ -43,8 +43,8 @@
         {/each}
       </div>
     {/if}
-  </ModalBody>
-</ComposedModal>
+  </svelte:fragment>
+</Modal>
 
 <style lang="scss">
   .search {
