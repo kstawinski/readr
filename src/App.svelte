@@ -3,7 +3,6 @@
   import AuthProxy from './views/AuthProxy.svelte'
   import Login from './views/Login.svelte'
   import Books from './views/Books.svelte'
-  import Add from './views/Add.svelte'
   import Book from './views/Book.svelte'
   import Collections from './views/Collections.svelte'
   import { Auth } from './hooks/Auth'
@@ -22,7 +21,6 @@
     {/if}
     <Route path="login" component={Login} />
     <AuthProxy path="/books" component={Books} />
-    <AuthProxy path="/add" component={Add} />
     <AuthProxy path="/book/:id" component={Book} />
     <AuthProxy path="/collections" component={Collections} />
   </Router>

@@ -1,29 +1,30 @@
 <script lang="ts">
-  const PAGE_TITLE: string = 'Dodaj książkę'
+  // props from Header component, then used by Modal
+  export let open: boolean
+  export let label: string
+  export let title: string
 
-  import { slide } from 'svelte/transition'
+  import { createEventDispatcher } from 'svelte'
+  import { navigate } from 'svelte-routing'
   import {
     Button,
-    Tile,
     TextInput,
     InlineLoading,
-    Content,
     InlineNotification,
     NotificationActionButton
   } from 'carbon-components-svelte'
-  import Search16 from 'carbon-icons-svelte/lib/Search16'
-  import ScanAlt16 from 'carbon-icons-svelte/lib/ScanAlt16'
   import axios from 'axios'
 
   import { db } from '../firebase'
   import { collection, addDoc } from 'firebase/firestore'
   import { Store } from '../hooks/Store'
   import { Parsers } from '../hooks/Parsers'
-  import Header from '../lib/Header.svelte'
-  import { navigate } from 'svelte-routing'
+  import Modal from '../lib/Modal.svelte'
 
   let ISBN: number
   let isFetching = false
+
+  const dispatch = createEventDispatcher()
 
   const notification = {
     isVisible: false,
@@ -119,89 +120,57 @@
           .catch(error => console.error(error))
       })
   })
+
+  const closeModal = () => {
+    open = false
+    dispatch('close')
+  }
 </script>
 
-<main>
-  <Header title={PAGE_TITLE} />
+<Modal {open} {label} {title} on:close={ () => closeModal() } size="xs">
+  <div slot="content">
+    <p>Dodaj ksiażkę, wprowadzając numer ISBN znajdujący się z tyłu okładki.</p>
 
-  <Content class="add__container">
-    <Tile light>
-      <p>Dodaj ksiażkę, wprowadzając numer ISBN znajdujący się z tyłu okładki.</p>
+    <div class="add__field">
+      <TextInput type="number" labelText="Numer ISBN" bind:value={ISBN} />
+    </div>
 
-      <div class="add__field">
-        <TextInput type="number" labelText="Numer ISBN" bind:value={ISBN} />
-      </div>
+    {#if isFetching}
+      <InlineLoading description="Szukam..." />
+    {/if}
 
-      <div class="add__footer">
-        <Button
-          kind="secondary"
-          icon={Search16}
-          on:click={addBook}
-          disabled={isFetching || (ISBN || 0).toString().length !== 13}
-        >Szukaj książki</Button>
+    {#if notification.isVisible}
+      <InlineNotification
+        kind="success"
+        subtitle="Książka została dodana."
+      >
+        <div slot="actions">
+          <NotificationActionButton
+            on:click={ () => navigate(`/book/${notification.id}`) }
+          >Zobacz</NotificationActionButton>
+        </div>
+      </InlineNotification>
+    {/if}
+  </div>
 
-        <Button
-          kind="ghost"
-          iconDescription="Skanuj etykietę"
-          icon={ScanAlt16}
-          disabled
-        />
+  <svelte:fragment slot="footer">
+    <Button
+      kind="secondary"
+      on:click={ () => closeModal() }
+    >Anuluj</Button>
 
-        {#if isFetching}
-          <div class="add__loader">
-            <InlineLoading description="Szukam..." />
-          </div>
-        {/if}
-      </div>
-
-      <div class="add__notification">
-        {#if notification.isVisible}
-        <InlineNotification
-          kind="success"
-          title="Sukces:"
-          subtitle="Książka została dodana."
-        >
-          <div slot="actions" transition:slide>
-            <NotificationActionButton
-              on:click={() => navigate(`/book/${notification.id}`)}
-            >Zobacz</NotificationActionButton>
-          </div>
-        </InlineNotification>
-        {/if}
-      </div>
-    </Tile>
-  </Content>
-</main>
+    <Button
+      kind="primary"
+      on:click={addBook}
+      disabled={isFetching || (ISBN || 0).toString().length !== 13}
+    >Szukaj książki</Button>
+  </svelte:fragment>
+</Modal>
 
 <style lang="scss">
   .add {
-    &__notification {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-    }
     &__field {
-      margin: 15px 0 25px 0;
+      margin: 10px 0;
     }
-    &__footer {
-      display: flex;
-      align-items: center;
-    }
-    &__loader {
-      margin-left: 10px;
-    }
-  }
-
-  @media (max-width: 500px) {
-    :global(.add__container) {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: calc(100vh - 3rem);
-    }
-  }
-  :global(.add__notification > div:first-child) {
-    margin: 0;
-    max-width: 100%;
   }
 </style>
