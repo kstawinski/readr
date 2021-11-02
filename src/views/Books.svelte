@@ -5,7 +5,7 @@
   import Header from '../lib/Header.svelte'
   import Book from '../lib/Book.svelte'
   import SearchModal from '../lib/SearchModal.svelte'
-  import Sorting from '../lib/Sorting.svelte'
+  import SortingModal from '../lib/SortingModal.svelte'
 
   import BookmarkAdd16 from 'carbon-icons-svelte/lib/BookmarkAdd16'
   import Search16 from 'carbon-icons-svelte/lib/Search16'
@@ -79,7 +79,7 @@
   {/if}
 
   {#if isSortingVisible}
-    <Sorting
+    <SortingModal
       open={isSortingVisible}
       on:close={() => isSortingVisible = false}
       on:change={({ detail }) => updateFilters(detail)}
