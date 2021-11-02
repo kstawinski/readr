@@ -1,6 +1,6 @@
 <script lang="ts">
   export let open: boolean
-  export let label: string
+  export let label = ''
   export let title: string
   export let size = null
 
