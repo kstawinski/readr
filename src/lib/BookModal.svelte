@@ -8,9 +8,7 @@
     ImageLoader,
     InlineLoading,
     InlineNotification,
-    Content,
     Button,
-    Grid,
     Row,
     Column,
     TooltipIcon
@@ -22,25 +20,25 @@
 
 	const dispatch = createEventDispatcher()
 
-  const closeModal = () => {
-    // open = false
-    dispatch('close')
-  }
-
   const formatDate = (timestampSeconds, monthLength = 'short') => {
     const options = {
       year: 'numeric',
       month: monthLength,
       day: 'numeric'
     }
-    
+
     const date = new Date(timestampSeconds * 1000)
 
     return date.toLocaleDateString('pl-PL', options)
   }
 </script>
 
-<Modal {open} label={ book.author } title={ book.title } on:close={ () => closeModal() }>
+<Modal
+  {open}
+  label={ book.author }
+  title={ book.title }
+  on:close={ () => dispatch('close') }
+>
   <svelte:fragment slot="content">
     <Row>
       <Column md={2} noGutterLeft>
