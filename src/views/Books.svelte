@@ -70,21 +70,17 @@
 <main>
   <Header title={PAGE_TITLE} />
 
-  {#if isSearchVisible}
-    <SearchModal
-      books={booksUnmodifiedArray}
-      open={isSearchVisible}
-      on:close={() => isSearchVisible = false}
-    />
-  {/if}
+  <SearchModal
+    books={booksUnmodifiedArray}
+    open={isSearchVisible}
+    on:close={() => isSearchVisible = false}
+  />
 
-  {#if isSortingVisible}
-    <SortingModal
-      open={isSortingVisible}
-      on:close={() => isSortingVisible = false}
-      on:change={({ detail }) => updateFilters(detail)}
-    />
-  {/if}
+  <SortingModal
+    open={isSortingVisible}
+    on:close={() => isSortingVisible = false}
+    on:change={({ detail }) => updateFilters(detail)}
+  />
 
   {#if isLoading}
     <div class="loader">
