@@ -27,10 +27,10 @@
     dispatch('close')
   }
 
-  const formatDate = (timestampSeconds) => {
+  const formatDate = (timestampSeconds, monthLength = 'short') => {
     const options = {
       year: 'numeric',
-      month: 'short',
+      month: monthLength,
       day: 'numeric'
     }
     
@@ -129,12 +129,12 @@
           </Row>
         </div>
 
-        <div class="book__group">
-          <ul>
-            <li>ISBN: { book.isbn }</li>
-            <li>Edytowano: { formatDate(book.lastModifiedDate.seconds) }</li>
-          </ul>
-        </div>
+        <p class="book__caption">
+          ISBN { book.isbn }
+          {#if book.lastModifiedDate}
+            • Ostatnia edycja { formatDate(book.lastModifiedDate.seconds, 'long') }
+          {/if}
+        </p>
       </Column>
     </Row>
   </svelte:fragment>
@@ -148,6 +148,10 @@
   .book {
     padding: 20px;
 
+    &__caption {
+      font-size: small;
+      color: gray;
+    }
     &__thumbnail {
       width: 50%;
       max-width: 220px;
