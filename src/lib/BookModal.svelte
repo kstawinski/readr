@@ -58,8 +58,9 @@
             <p class="book__description">{ book.description }</p>
           {:else}
             <InlineNotification
+              hideCloseButton
               kind="info"
-              subtitle="Nie podano opisu dla tej książki."
+              subtitle="Nie dodano notatki dla tej książki."
             />
           {/if}
 
