@@ -19,17 +19,5 @@ export const Books = {
       .catch(error => {
         reject(error)
       })
-  }),
-
-  getBook: (id: string) => new Promise((resolve: (value: Book) => void, reject) => {
-    Books.getAllBooks()
-      .then(books => {
-        resolve(
-          books.filter(book => book.id === id)[0]
-        )
-      })
-      .catch(error => {
-        reject(error)
-      })
   })
 }

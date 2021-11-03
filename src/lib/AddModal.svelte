@@ -5,13 +5,10 @@
   export let title: string
 
   import { createEventDispatcher } from 'svelte'
-  import { navigate } from 'svelte-routing'
   import {
     Button,
     TextInput,
-    InlineLoading,
-    InlineNotification,
-    NotificationActionButton
+    InlineLoading
   } from 'carbon-components-svelte'
   import axios from 'axios'
 
@@ -23,13 +20,9 @@
 
   let ISBN: number
   let isFetching = false
+  let isSuccess = false
 
   const dispatch = createEventDispatcher()
-
-  const notification = {
-    isVisible: false,
-    id: ''
-  }
 
   const searchUsingGoogleBooks = () => new Promise((resolve, reject) => {
     if (ISBN && ISBN.toString().length === 13) {
@@ -67,11 +60,6 @@
     }
   })
 
-  // addDoc(collection(db, 'books'), {
-  //   name: "Tokyo",
-  //   country: "Japan"
-  // });
-
   const addBook = () => new Promise((resolve, reject) => {
     searchUsingISBN()
       .then(({ title, author, publicationYear }) => {
@@ -87,10 +75,8 @@
 
         // submit book
         addDoc(collection(db, 'books'), book)
-          .then(({ id }) => {
-            console.log(`Document ID: ${id}`)
-            notification.id = id
-            notification.isVisible = true
+          .then(() => {
+            isSuccess = true
           })
           .catch(error => console.error(error))
       })
@@ -110,10 +96,8 @@
 
             // submit book
             addDoc(collection(db, 'books'), book)
-              .then(({ id }) => {
-                console.log(`Document ID: ${id}`)
-                notification.id = id
-                notification.isVisible = true
+              .then(() => {
+                isSuccess = true
               })
               .catch(error => console.error(error))
           })
@@ -139,17 +123,8 @@
       <InlineLoading description="Szukam..." />
     {/if}
 
-    {#if notification.isVisible}
-      <InlineNotification
-        kind="success"
-        subtitle="Książka została dodana."
-      >
-        <div slot="actions">
-          <NotificationActionButton
-            on:click={ () => navigate(`/book/${notification.id}`) }
-          >Zobacz</NotificationActionButton>
-        </div>
-      </InlineNotification>
+    {#if isSuccess}
+      <InlineLoading status="finished" description="Dodano książkę!" />
     {/if}
   </div>
 
