@@ -1,15 +1,34 @@
 <script lang="ts">
   export let book: Book
-  import { navigate } from 'svelte-routing'
   import Rating from '../lib/Rating.svelte'
+  import BookModal from '../lib/BookModal.svelte'
+  import EditModal from '../lib/EditModal.svelte'
 
-  const redirectToBook = () => navigate(
-    `/book/${ book.id }`
-  )
+  let isBookModalVisible = false
+  let isEditModalVisible = false
+
+  const switchModals = () => {
+    isEditModalVisible = !isEditModalVisible
+    isBookModalVisible = !isBookModalVisible
+  }
 </script>
 
+<BookModal
+  {book}
+  open={isBookModalVisible}
+  on:close={ () => isBookModalVisible = false }
+  on:edit={ () => switchModals() }
+/>
+
+<EditModal
+  {book}
+  open={isEditModalVisible}
+  on:close={() => isEditModalVisible = false}
+  on:cancel={() => switchModals() }
+/>
+
 <div class="book">
-  <div class="book__thumbnail" on:click="{ redirectToBook }">
+  <div class="book__thumbnail" on:click={ () => isBookModalVisible = true }>
     <div
       class="book__img"
       style="background-image: url({ book.thumbnail })">
