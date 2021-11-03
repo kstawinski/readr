@@ -96,7 +96,7 @@
     </Grid>
   </ModalBody>
   <ModalFooter>
-    <Button kind="secondary" on:click={() => open = false}>Anuluj</Button>
+    <Button kind="secondary" on:click={() => dispatch('cancel')}>Anuluj</Button>
     <Button kind="primary" on:click={() => editBook()}>Edytuj książkę</Button>
   </ModalFooter>
 </ComposedModal>
