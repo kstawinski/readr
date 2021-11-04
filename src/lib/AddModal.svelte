@@ -7,7 +7,7 @@
   import { createEventDispatcher } from 'svelte'
   import {
     Button,
-    TextInput,
+    NumberInput,
     InlineLoading
   } from 'carbon-components-svelte'
   import axios from 'axios'
@@ -116,7 +116,11 @@
     <p>Dodaj ksiażkę, wprowadzając numer ISBN znajdujący się z tyłu okładki.</p>
 
     <div class="add__field">
-      <TextInput type="number" labelText="Numer ISBN" bind:value={ISBN} />
+      <NumberInput
+        hideSteppers
+        label="Numer ISBN"
+        bind:value={ISBN}
+      />
     </div>
 
     {#if isFetching}
@@ -145,7 +149,7 @@
 <style lang="scss">
   .add {
     &__field {
-      margin: 10px 0;
+      margin: 20px 0 10px 0;
     }
   }
 </style>
