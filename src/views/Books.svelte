@@ -6,19 +6,17 @@
   import Book from '../lib/Book.svelte'
   import SearchModal from '../lib/SearchModal.svelte'
   import SortingModal from '../lib/SortingModal.svelte'
-
   import BookmarkAdd16 from 'carbon-icons-svelte/lib/BookmarkAdd16'
   import Search16 from 'carbon-icons-svelte/lib/Search16'
   import SortDescending16 from 'carbon-icons-svelte/lib/SortDescending16'
   import { Button, Content, InlineLoading } from 'carbon-components-svelte'
-  import { navigate } from 'svelte-routing'
 
   let books: BooksArray = []
   let booksUnmodifiedArray: BooksArray = []
   let isLoading = true
   let isSearchVisible = false
   let isSortingVisible = false
-  
+
   Books.getAllBooks()
     .then(booksArr => {
       books = booksArr
@@ -65,6 +63,8 @@
         break;
     }
   }
+
+  const removeBookFromArray = (id: string) => books = books.filter(book => book.id !== id)
 </script>
 
 <main>
@@ -89,9 +89,12 @@
   {:else}
     <Content>
       <div class="books__list">
-        {#each books as book}
+        {#each books as book (book.id)}
           <div class="books__item">
-            <Book {book} />
+            <Book
+              {book}
+              on:delete={({ detail }) => removeBookFromArray(detail)}
+            />
           </div>
         {/each}
       </div>
