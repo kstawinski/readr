@@ -22,13 +22,11 @@
   }
 </script>
 
-<!-- {#if isAddModalOpen} -->
-  <AddModal
-    label="Nowa książka" title="Dodaj przez ISBN"
-    open={ isAddModalOpen }
-    on:close={ () => isAddModalOpen = false }
-  />
-<!-- {/if} -->
+<AddModal
+  label="Nowa książka" title="Dodaj przez ISBN"
+  open={ isAddModalOpen }
+  on:close={ () => isAddModalOpen = false }
+/>
 
 <Header platformName={ title } bind:isSideNavOpen>
   <div slot="skip-to-content">
