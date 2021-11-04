@@ -148,7 +148,7 @@
       padding: 20px;
       width: 100%;
       /* z-index pulls the menu to the top on desktop devices */
-      z-index: 9000;
+      z-index: 8000;
     }
     &__item {
       width: 120px;
