@@ -1,5 +1,5 @@
 import { db } from '../firebase'
-import { collection, getDocs, where, query } from 'firebase/firestore'
+import { collection, getDocs, where, query, doc, deleteDoc } from 'firebase/firestore'
 import { Store } from './Store'
 
 const UID = Store.getItem('uid')
@@ -19,5 +19,7 @@ export const Books = {
       .catch(error => {
         reject(error)
       })
-  })
+  }),
+
+  delete: async (id: string) => await deleteDoc(doc(db, 'books', id))
 }
