@@ -22,6 +22,7 @@
     Button,
     MultiSelect
   } from 'carbon-components-svelte'
+  import Delete16 from 'carbon-icons-svelte/lib/Delete16'
 
   const dispatch = createEventDispatcher()
 
@@ -96,7 +97,8 @@
     </Grid>
   </ModalBody>
   <ModalFooter>
+    <Button kind="danger-ghost" icon={Delete16} on:click={() => dispatch('delete')}>Usuń z biblioteki</Button>
     <Button kind="secondary" on:click={() => dispatch('cancel')}>Anuluj</Button>
-    <Button kind="primary" on:click={() => editBook()}>Edytuj książkę</Button>
+    <Button kind="primary" on:click={() => editBook()}>Zapisz zmiany</Button>
   </ModalFooter>
 </ComposedModal>
