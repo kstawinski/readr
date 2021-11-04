@@ -24,8 +24,8 @@
   </Router>
 </div>
 
-<style>
-  :global(.loader) {
+<style global>
+  .loader {
     min-height: 100vh;
     width: 100%;
     display: flex;
@@ -33,30 +33,35 @@
     justify-content: center;
   }
 
-  :global(.loader > div:first-child) {
+  .loader > div:first-child {
     width: auto;
   }
 
-  :global(.bx--modal.is-visible) {
+  .bx--modal.is-visible {
     /* fix modal overlay position */
     z-index: 10000;
   }
 
-  :global(.bx--side-nav__item:hover) {
+  .bx--side-nav__item:hover {
     cursor: pointer;
   }
 
   @media (max-width: 500px) {
-    :global(.bx--side-nav~.bx--content) {
+    .bx--side-nav~.bx--content {
       margin-left: 0 !important;
     }
   }
 
-  :global(.bx--side-nav__overlay-active) {
+  .bx--side-nav__overlay-active {
     z-index: 10;
   }
 
-  :global(.bx--content) {
+  .bx--content {
     padding: 0.8rem !important;
+  }
+
+  /* Blur background under modal */
+  .bx--modal {
+    backdrop-filter: blur(3px);
   }
 </style>
