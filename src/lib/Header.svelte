@@ -1,6 +1,7 @@
 <script lang="ts">
   export let title: string
 
+  import { createEventDispatcher } from 'svelte'
   import {
     Header,
     SideNav,
@@ -10,23 +11,16 @@
   } from 'carbon-components-svelte'
   import { navigate } from 'svelte-routing'
   import ProfileBar from '../lib/ProfileBar.svelte'
-  import Modal from '../lib/Modal.svelte'
-  import AddModal from '../lib/AddModal.svelte'
 
   let isSideNavOpen = false
-  let isAddModalOpen = false
+
+  const dispatch = createEventDispatcher()
 
   const logout = () => {
     localStorage.clear()
     navigate('/login', { replace: true })
   }
 </script>
-
-<AddModal
-  label="Nowa książka" title="Dodaj przez ISBN"
-  open={ isAddModalOpen }
-  on:close={ () => isAddModalOpen = false }
-/>
 
 <Header platformName={ title } bind:isSideNavOpen>
   <div slot="skip-to-content">
@@ -43,7 +37,7 @@
 
     <SideNavLink
       text="Dodaj książkę"
-      on:click={ () => isAddModalOpen = true }
+      on:click={ () => dispatch('open-add-modal') }
     />
 
     <SideNavLink

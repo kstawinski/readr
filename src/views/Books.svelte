@@ -6,6 +6,7 @@
   import Book from '../lib/Book.svelte'
   import SearchModal from '../lib/SearchModal.svelte'
   import SortingModal from '../lib/SortingModal.svelte'
+  import AddModal from '../lib/AddModal.svelte'
   import BookmarkAdd16 from 'carbon-icons-svelte/lib/BookmarkAdd16'
   import Search16 from 'carbon-icons-svelte/lib/Search16'
   import SortDescending16 from 'carbon-icons-svelte/lib/SortDescending16'
@@ -16,6 +17,7 @@
   let isLoading = true
   let isSearchVisible = false
   let isSortingVisible = false
+  let isAddModalVisible = false
 
   Books.getAllBooks()
     .then(booksArr => {
@@ -68,12 +70,21 @@
 </script>
 
 <main>
-  <Header title={PAGE_TITLE} />
+  <Header
+    title={PAGE_TITLE}
+    on:open-add-modal={ () => isAddModalVisible = true }
+  />
 
   <SearchModal
     books={booksUnmodifiedArray}
     open={isSearchVisible}
     on:close={() => isSearchVisible = false}
+  />
+
+  <AddModal
+    label="Nowa książka" title="Dodaj przez ISBN"
+    open={ isAddModalVisible }
+    on:close={ () => isAddModalVisible = false }
   />
 
   <SortingModal
@@ -103,7 +114,7 @@
         <Button
           icon={BookmarkAdd16}
           kind="secondary"
-          on:click={() => navigate('/add')}
+          on:click={ () => isAddModalVisible = true }
         >Dodaj kolejną książkę</Button>
 
         <Button
