@@ -1,8 +1,13 @@
 <script lang="ts">
   export let book: Book
+
+  import { createEventDispatcher } from 'svelte'
   import Rating from '../lib/Rating.svelte'
   import BookModal from '../lib/BookModal.svelte'
   import EditModal from '../lib/EditModal.svelte'
+  import { Books } from '../hooks/Books';
+
+  const dispatch = createEventDispatcher()
 
   let isBookModalVisible = false
   let isEditModalVisible = false
@@ -10,6 +15,16 @@
   const switchModals = () => {
     isEditModalVisible = !isEditModalVisible
     isBookModalVisible = !isBookModalVisible
+  }
+
+  const deleteBook = (id: string) => {
+    Books.delete(id)
+      .then(() => {
+        dispatch('delete', id)
+        isBookModalVisible = false
+        isEditModalVisible = false
+      })
+      .catch(error => console.warn(error))
   }
 </script>
 
@@ -25,6 +40,7 @@
   open={isEditModalVisible}
   on:close={() => isEditModalVisible = false}
   on:cancel={() => switchModals() }
+  on:delete={() => deleteBook(book.id)}
 />
 
 <div class="book">
