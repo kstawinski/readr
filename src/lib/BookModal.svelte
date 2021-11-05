@@ -19,6 +19,7 @@
   import Time20 from 'carbon-icons-svelte/lib/Time20'
   import Calendar20 from 'carbon-icons-svelte/lib/Calendar20'
   import Folder20 from 'carbon-icons-svelte/lib/Folder20'
+  import BookInfo from '../lib/BookInfo.svelte'
 
 	const dispatch = createEventDispatcher()
 
@@ -79,74 +80,42 @@
 
         <div class="book__group">
           <Row>
-            <!-- year -->
+            <!-- Publication year -->
             {#if book.publishedAt}
-              <Column>
-                <div class="book__meta">
-                  <div class="book__metaIcon">
-                    <TooltipIcon
-                      tooltipText="Rok publikacji"
-                      icon={Calendar20}
-                    />
-                  </div>
-                  <div class="book__metaValue">
-                    { book.publishedAt }
-                  </div>
-                </div>
-              </Column>
+              <BookInfo
+                tooltip="Rok publikacji"
+                icon={Calendar20}
+                value={book.publishedAt}
+              />
             {/if}
 
-            <!-- pages -->
+            <!-- Pages -->
             {#if book.pages}
-              <Column>
-                <div class="book__meta">
-                  <div class="book__metaIcon">
-                    <TooltipIcon
-                      tooltipText="Liczba stron"
-                      icon={Book20}
-                    />
-                  </div>
-                  <div class="book__metaValue">
-                    { book.pages }
-                  </div>
-                </div>
-              </Column>
+              <BookInfo
+                tooltip="Liczba stron"
+                icon={Book20}
+                value={book.pages}
+              />
             {/if}
 
-            <!-- time add -->
+            <!-- Add time -->
             {#if book.addDate}
-              <Column>
-                <div class="book__meta">
-                  <div class="book__metaIcon">
-                    <TooltipIcon
-                      tooltipText="Data dodania"
-                      icon={Time20}
-                    />
-                  </div>
-                  <div class="book__metaValue">
-                    { formatDate(book.addDate.seconds) }
-                  </div>
-                </div>
-              </Column>
+              <BookInfo
+                tooltip="Data dodania"
+                icon={Time20}
+                value={formatDate(book.addDate.seconds)}
+              />
             {/if}
           </Row>
 
-          <!-- collections -->
+          <!-- Collections -->
           {#if book.collections.length > 0}
             <Row>
-              <Column>
-                <div class="book__meta book__meta-categories">
-                  <div class="book__metaIcon">
-                    <TooltipIcon
-                      tooltipText="Przypisane kolekcje"
-                      icon={Folder20}
-                    />
-                  </div>
-                  <div class="book__metaValue">
-                    { displayCategoriesList() }
-                  </div>
-                </div>
-              </Column>
+              <BookInfo
+                tooltip="Przypisane kolekcje"
+                icon={Folder20}
+                value={displayCategoriesList()}
+              />
             </Row>
           {/if}
         </div>
@@ -180,14 +149,6 @@
       margin: 20px auto;
       display: block;
     }
-    &__meta {
-      display: flex;
-      align-items: center;
-
-      &-categories {
-        margin-top: 5px;
-      }
-    }
     &__rating {
       display: flex;
       align-items: center;
@@ -197,7 +158,7 @@
         margin-bottom: 20px;
       }
     }
-    &__metaValue, &__ratingValue {
+    &__ratingValue {
       margin-left: 5px;
       font-weight: 600;
     }
