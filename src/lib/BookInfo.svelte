@@ -1,7 +1,7 @@
 <script lang="ts">
   export let tooltip: string
   export let icon
-  export let value: string|number
+  export let value: string|number = ''
 
   import { Column, TooltipIcon } from 'carbon-components-svelte'
 </script>
@@ -14,7 +14,11 @@
         icon={icon}
       />
     </div>
-    <div class="meta__value">{value}</div>
+    <div class="meta__value">
+      <slot></slot>
+
+      { value }
+    </div>
   </div>
 </Column>
 
