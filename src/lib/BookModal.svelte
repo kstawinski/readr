@@ -11,8 +11,7 @@
     InlineNotification,
     Button,
     Row,
-    Column,
-    TooltipIcon
+    Column
   } from 'carbon-components-svelte'
   import Book20 from 'carbon-icons-svelte/lib/Book20'
   import Time20 from 'carbon-icons-svelte/lib/Time20'
@@ -137,30 +136,13 @@
       font-size: small;
       color: gray;
     }
-    &__thumbnail {
-      width: 50%;
-      max-width: 220px;
-      margin: 20px auto;
-      display: block;
-    }
     &__group {
       &:not(:last-child) {
         margin-bottom: 20px;
       }
     }
-    &__title {
-      font-size: 2.25em;
-      margin-bottom: 10px;
-    }
-    &__author {
-      font-size: 1.25em;
-    }
     &__description {
       margin-bottom: 15px;
     }
-  }
-
-  :global(.book__field) {
-    margin-bottom: 5px;
   }
 </style>
