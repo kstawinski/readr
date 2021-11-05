@@ -1,5 +1,6 @@
 <script lang="ts">
   export let book: Book
+  export let collections: CollectionsArray
 
   import { createEventDispatcher } from 'svelte'
   import Rating from '../lib/Rating.svelte'
@@ -30,6 +31,7 @@
 
 <BookModal
   {book}
+  {collections}
   open={isBookModalVisible}
   on:close={ () => isBookModalVisible = false }
   on:edit={ () => switchModals() }

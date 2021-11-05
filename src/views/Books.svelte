@@ -2,6 +2,7 @@
   const PAGE_TITLE: string = 'Biblioteka'
 
   import { Books } from '../hooks/Books'
+  import { Collections } from '../hooks/Collections'
   import Header from '../lib/Header.svelte'
   import Book from '../lib/Book.svelte'
   import SearchModal from '../lib/SearchModal.svelte'
@@ -14,6 +15,7 @@
 
   let books: BooksArray = []
   let booksUnmodifiedArray: BooksArray = []
+  let collections: CollectionsArray = []
   let isLoading = true
   let isSearchVisible = false
   let isSortingVisible = false
@@ -23,7 +25,11 @@
     .then(booksArr => {
       books = booksArr
       booksUnmodifiedArray = booksArr
-      isLoading = false
+
+      Collections.getAll().then(collectionsArr => {
+        collections = collectionsArr
+        isLoading = false
+      })
     })
 
   // On slash click while search is not visible
@@ -104,6 +110,7 @@
           <div class="books__item">
             <Book
               {book}
+              {collections}
               on:delete={({ detail }) => removeBookFromArray(detail)}
             />
           </div>

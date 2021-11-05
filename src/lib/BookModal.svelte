@@ -1,5 +1,6 @@
 <script lang="ts">
   export let book: Book
+  export let collections: CollectionsArray
   export let open: boolean
 
   import { createEventDispatcher } from 'svelte'
@@ -17,6 +18,7 @@
   import Book20 from 'carbon-icons-svelte/lib/Book20'
   import Time20 from 'carbon-icons-svelte/lib/Time20'
   import Calendar20 from 'carbon-icons-svelte/lib/Calendar20'
+  import Folder20 from 'carbon-icons-svelte/lib/Folder20'
 
 	const dispatch = createEventDispatcher()
 
@@ -31,6 +33,8 @@
 
     return date.toLocaleDateString('pl-PL', options)
   }
+
+  const displayCategoriesList = () => collections.filter(coll => book.collections.includes(coll.id)).map(collection => collection.text).join(', ')
 </script>
 
 <Modal
@@ -126,6 +130,25 @@
               </Column>
             {/if}
           </Row>
+
+          <!-- collections -->
+          {#if book.collections.length > 0}
+            <Row>
+              <Column>
+                <div class="book__meta book__meta-categories">
+                  <div class="book__metaIcon">
+                    <TooltipIcon
+                      tooltipText="Przypisane kolekcje"
+                      icon={Folder20}
+                    />
+                  </div>
+                  <div class="book__metaValue">
+                    { displayCategoriesList() }
+                  </div>
+                </div>
+              </Column>
+            </Row>
+          {/if}
         </div>
 
         <p class="book__caption">
@@ -160,6 +183,10 @@
     &__meta {
       display: flex;
       align-items: center;
+
+      &-categories {
+        margin-top: 5px;
+      }
     }
     &__rating {
       display: flex;
