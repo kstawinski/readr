@@ -14,12 +14,12 @@
     Column,
     TooltipIcon
   } from 'carbon-components-svelte'
-  import StarFilled24 from 'carbon-icons-svelte/lib/StarFilled24'
   import Book20 from 'carbon-icons-svelte/lib/Book20'
   import Time20 from 'carbon-icons-svelte/lib/Time20'
   import Calendar20 from 'carbon-icons-svelte/lib/Calendar20'
   import Folder20 from 'carbon-icons-svelte/lib/Folder20'
   import BookInfo from '../lib/BookInfo.svelte'
+  import BookRating from '../lib/BookRating.svelte'
 
 	const dispatch = createEventDispatcher()
 
@@ -68,13 +68,7 @@
           {/if}
 
           {#if book.rate}
-            <div class="book__rating">
-              {#each [...Array(book.rate)] as rating}
-                <StarFilled24 />
-              {/each}
-
-              <div class="book__ratingValue">{ book.rate }/5</div>
-            </div>
+            <BookRating value={book.rate} />
           {/if}
         </div>
 
@@ -149,18 +143,10 @@
       margin: 20px auto;
       display: block;
     }
-    &__rating {
-      display: flex;
-      align-items: center;
-    }
     &__group {
       &:not(:last-child) {
         margin-bottom: 20px;
       }
-    }
-    &__ratingValue {
-      margin-left: 5px;
-      font-weight: 600;
     }
     &__title {
       font-size: 2.25em;
