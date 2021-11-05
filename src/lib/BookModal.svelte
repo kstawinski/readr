@@ -11,7 +11,8 @@
     InlineNotification,
     Button,
     Row,
-    Column
+    Column,
+    Tag
   } from 'carbon-components-svelte'
   import Book20 from 'carbon-icons-svelte/lib/Book20'
   import Time20 from 'carbon-icons-svelte/lib/Time20'
@@ -33,8 +34,6 @@
 
     return date.toLocaleDateString('pl-PL', options)
   }
-
-  const displayCategoriesList = () => collections.filter(coll => book.collections.includes(coll.id)).map(collection => collection.text).join(', ')
 </script>
 
 <Modal
@@ -107,8 +106,11 @@
               <BookInfo
                 tooltip="Przypisane kolekcje"
                 icon={Folder20}
-                value={displayCategoriesList()}
-              />
+              >
+                {#each collections.filter(collectionItem => book.collections.includes(collectionItem.id)) as collection}
+                  <Tag>{ collection.text }</Tag>
+                {/each}
+              </BookInfo>
             </Row>
           {/if}
         </div>
