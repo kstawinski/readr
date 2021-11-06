@@ -62,6 +62,10 @@
             <div class="book__field"><NumberInput hideSteppers placeholder="ISBN" bind:value={book.isbn} /></div>
           </FormGroup>
 
+          <FormGroup legendText="Okładka książki">
+            <div class="book__field"><TextInput placeholder="URL okładki" bind:value={book.thumbnail} /></div>
+          </FormGroup>
+
           <FormGroup>
             <div class="book__field">
               <MultiSelect
