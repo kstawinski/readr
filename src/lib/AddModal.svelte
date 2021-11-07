@@ -70,6 +70,7 @@
           author: Parsers.parseAuthor(author),
           thumbnail: `https://covers.openlibrary.org/b/isbn/${ISBN}-L.jpg`,
           addDate: new Date(),
+          lastModifiedDate: new Date(),
           publishedAt: Number(publicationYear)
         }
 
@@ -91,6 +92,7 @@
               author: authors[0],
               thumbnail: `https://covers.openlibrary.org/b/isbn/${ISBN}-L.jpg`,
               addDate: new Date(),
+              lastModifiedDate: new Date(),
               publishedAt: Number(publishedDate)
             }
 
