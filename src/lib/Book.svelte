@@ -54,7 +54,7 @@
   </div>
 
   <div class="book__text">
-    {#if book.rate}
+    {#if Number(book.rate)}
       <Rating rate={ book.rate } />
     {/if}
     <div class="book__title">{ book.title }</div>
