@@ -101,7 +101,7 @@
           </Row>
 
           <!-- Collections -->
-          {#if book.collections}
+          {#if ( book.collections || [] ).length > 0}
             <Row>
               <BookInfo
                 tooltip="Przypisane kolekcje"
