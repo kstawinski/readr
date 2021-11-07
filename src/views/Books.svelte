@@ -25,6 +25,7 @@
     .then(booksArr => {
       books = booksArr
       booksUnmodifiedArray = booksArr
+      updateSort({ method: 'editDes', isRatingRequired: false })
 
       Collections.getAll().then(collectionsArr => {
         collections = collectionsArr
@@ -39,14 +40,14 @@
     }
   });
 
-  const updateFilters = (options: SortingOptions) => {
+  const updateSort = (options: SortingOptions) => {
     isSortingVisible = false
 
-    const booksArray = options.showOnlyReaded ?
+    const booksArray = options.isRatingRequired ?
       booksUnmodifiedArray.filter(book => book.rate)
       : booksUnmodifiedArray
 
-    switch (options.sortingMethod) {
+    switch (options.method) {
       case 'title':
         books = booksArray.sort((a, b) => a.title.localeCompare(b.title))
         break;
@@ -64,6 +65,12 @@
         break;
       case 'addDes':
         books = booksArray.sort((a, b) => Number(b.addDate) - Number(a.addDate))
+        break;
+      case 'editAsc':
+        books = booksArray.sort((a, b) => Number(a.lastModifiedDate) - Number(b.lastModifiedDate))
+        break;
+      case 'editDes':
+        books = booksArray.sort((a, b) => Number(b.lastModifiedDate) - Number(a.lastModifiedDate))
         break;
       default:
         // sort by title
@@ -96,7 +103,7 @@
   <SortingModal
     open={isSortingVisible}
     on:close={() => isSortingVisible = false}
-    on:change={({ detail }) => updateFilters(detail)}
+    on:change={({ detail }) => updateSort(detail)}
   />
 
   {#if isLoading}

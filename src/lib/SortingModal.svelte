@@ -13,8 +13,8 @@
 	const dispatch = createEventDispatcher()
 
   let form: SortingOptions = {
-    sortingMethod: '',
-    showOnlyReaded: false
+    method: '',
+    isRatingRequired: false
   }
 
   let isCheckboxDisabled = false
@@ -25,14 +25,16 @@
     { id: 'ratingAsc', name: 'Oceny książki (od najsłabszych)' },
     { id: 'ratingDes', name: 'Oceny książki (od najlepszych)' },
     { id: 'addAsc', name: 'Daty dodania (rosnąco)' },
-    { id: 'addDes', name: 'Daty dodania (malejąco)' }
+    { id: 'addDes', name: 'Daty dodania (malejąco)' },
+    { id: 'editAsc', name: 'Daty ostatniej modyfikacji (rosnąco)' },
+    { id: 'editDes', name: 'Daty ostatniej modyfikacji (malejąco)' }
   ]
 
   const isRatingRequired = () => {
     const sortingRequiringEvaluation = ['ratingAsc', 'ratingDes']
 
-    if (sortingRequiringEvaluation.includes(form.sortingMethod)) {
-      form.showOnlyReaded = true
+    if (sortingRequiringEvaluation.includes(form.method)) {
+      form.isRatingRequired = true
       isCheckboxDisabled = true
     } else {
       isCheckboxDisabled = false
@@ -50,7 +52,7 @@
     <div class="sorting__field">
       <Select
         labelText="Sortuj według"
-        bind:selected={ form.sortingMethod }
+        bind:selected={ form.method }
         on:change={ () => isRatingRequired() }
       >
         {#each sortingMethods as method}
@@ -62,7 +64,7 @@
     <div class="sorting__field">
       <Checkbox
         labelText="Wyświetlaj tylko przeczytane pozycje (ocenione)"
-        bind:checked={ form.showOnlyReaded }
+        bind:checked={ form.isRatingRequired }
         disabled={ isCheckboxDisabled }
       />
     </div>

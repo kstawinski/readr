@@ -28,8 +28,8 @@ interface Collection {
 }
 
 interface SortingOptions {
-  sortingMethod: string
-  showOnlyReaded: boolean
+  method: 'title' | 'author' | 'ratingAsc' | 'ratingDes' | 'addAsc' | 'addDes' | 'editAsc' | 'editDes' | ''
+  isRatingRequired: boolean
 }
 
 type BooksArray = Array<Book>
