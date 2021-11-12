@@ -13,7 +13,7 @@
         Store.setItem('uid', uid)
         Store.setItem('name', displayName)
         Store.setItem('email', email)
-        Store.setItem('avatar', photoURL)
+        Store.saveUserPhoto(photoURL)
       })
       .then(() => navigate(
         '/books',

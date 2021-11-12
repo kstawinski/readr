@@ -4,12 +4,12 @@
   const user = {
     name: Store.getItem('name'),
     email: Store.getItem('email'),
-    avatar: Store.getItem('avatar')
+    photo: Store.getItem('photo')
   }
 </script>
 
 <div class="user">
-  <img src={ user.avatar } alt={ user.name } class="user__avatar">
+  <img src={ user.photo } alt={ user.name } class="user__photo">
   <div>{ user.name }</div>
 </div>
 
@@ -21,7 +21,7 @@
     margin-top: 20px;
     border-top: 1px solid #E7E7E5;
 
-    &__avatar {
+    &__photo {
       margin-right: 10px;
       width: 24px;
       border-radius: 30px;
