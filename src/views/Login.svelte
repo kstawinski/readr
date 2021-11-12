@@ -1,6 +1,7 @@
 <script lang="ts">
   const PAGE_TITLE: string = 'Zaloguj się'
 
+  import { onMount } from 'svelte'
   import { navigate } from 'svelte-routing'
   import { Auth } from '../hooks/Auth'
   import { Store } from '../hooks/Store'
@@ -15,11 +16,16 @@
         Store.setItem('email', email)
         Store.saveUserPhoto(photoURL)
       })
-      .then(() => navigate(
-        '/books',
-        { replace: true }
-      ))
+      .then(() => checkAuthStatus())
   }
+
+  const checkAuthStatus = () => {
+    if (Auth.isLoggedIn()) {
+      navigate('/books')
+    }
+  }
+
+  onMount(() => checkAuthStatus())
 </script>
 
 <main class="login__content">
