@@ -114,13 +114,11 @@
     <Content>
       <div class="books__list">
         {#each books as book (book.id)}
-          <div class="books__item">
-            <Book
-              {book}
-              {collections}
-              on:delete={({ detail }) => removeBookFromArray(detail)}
-            />
-          </div>
+          <Book
+            {book}
+            {collections}
+            on:delete={({ detail }) => removeBookFromArray(detail)}
+          />
         {/each}
       </div>
 
@@ -164,13 +162,10 @@
       /* z-index pulls the menu to the top on desktop devices */
       z-index: 8000;
     }
-    &__item {
-      width: 120px;
-    }
     &__list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, 100px) minmax(100px, max-content);
-      grid-gap: 40px;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 15px;
     }
   }
 

@@ -64,8 +64,6 @@
 
 <style lang="scss">
   .book {
-    width: 120px;
-
     &__title {
       font-weight: 600;
       font-size: 105%;
