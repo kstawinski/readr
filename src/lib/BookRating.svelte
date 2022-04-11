@@ -1,12 +1,12 @@
 <script lang="ts">
   export let value: number
 
-  import StarFilled24 from 'carbon-icons-svelte/lib/StarFilled24'
+  import StarFilled from 'carbon-icons-svelte/lib/StarFilled.svelte'
 </script>
 
 <div class="rating">
   {#each [...Array(value)] as rating}
-    <StarFilled24 />
+    <StarFilled size={24} />
   {/each}
 
   <div class="rating__value">{ value }/5</div>

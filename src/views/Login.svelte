@@ -6,7 +6,6 @@
   import { Auth } from '../hooks/Auth'
   import { Store } from '../hooks/Store'
   import { Button } from 'carbon-components-svelte'
-  import LogoGoogle16 from 'carbon-icons-svelte/lib/LogoGoogle16'
 
   const login = () => {
     Auth.signInUsingGoogle()
@@ -38,7 +37,6 @@
 
       <Button
         kind="secondary"
-        icon={LogoGoogle16}
         on:click={login}
         size="lg"
         class="login__button"

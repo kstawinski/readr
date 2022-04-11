@@ -14,10 +14,10 @@
     Column,
     Tag
   } from 'carbon-components-svelte'
-  import Book20 from 'carbon-icons-svelte/lib/Book20'
-  import Time20 from 'carbon-icons-svelte/lib/Time20'
-  import Calendar20 from 'carbon-icons-svelte/lib/Calendar20'
-  import Folder20 from 'carbon-icons-svelte/lib/Folder20'
+  import Book from 'carbon-icons-svelte/lib/Book.svelte'
+  import Time from 'carbon-icons-svelte/lib/Time.svelte'
+  import Calendar from 'carbon-icons-svelte/lib/Calendar.svelte'
+  import Folder from 'carbon-icons-svelte/lib/Folder.svelte'
   import BookInfo from '../lib/BookInfo.svelte'
   import BookRating from '../lib/BookRating.svelte'
 
@@ -76,7 +76,7 @@
             {#if book.publishedAt}
               <BookInfo
                 tooltip="Rok publikacji"
-                icon={Calendar20}
+                icon={Calendar}
                 value={book.publishedAt}
               />
             {/if}
@@ -85,7 +85,7 @@
             {#if book.pages}
               <BookInfo
                 tooltip="Liczba stron"
-                icon={Book20}
+                icon={Book}
                 value={book.pages}
               />
             {/if}
@@ -94,7 +94,7 @@
             {#if book.addDate}
               <BookInfo
                 tooltip="Data dodania"
-                icon={Time20}
+                icon={Time}
                 value={formatDate(book.addDate.seconds)}
               />
             {/if}
@@ -105,7 +105,7 @@
             <Row>
               <BookInfo
                 tooltip="Przypisane kolekcje"
-                icon={Folder20}
+                icon={Folder}
               >
                 {#each collections.filter(collectionItem => book.collections.includes(collectionItem.id)) as collection}
                   <Tag>{ collection.text }</Tag>

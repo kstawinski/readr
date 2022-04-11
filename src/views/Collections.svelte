@@ -16,7 +16,7 @@
     OrderedList,
     ListItem
   } from 'carbon-components-svelte'
-  import FolderAdd16 from 'carbon-icons-svelte/lib/FolderAdd16'
+  import FolderAdd from 'carbon-icons-svelte/lib/FolderAdd.svelte'
   import { Books } from '../hooks/Books'
   import { Collections } from '../hooks/Collections'
   import Header from '../lib/Header.svelte'
@@ -107,7 +107,7 @@
 
   <div class="collections__footer">
     <Button
-      icon={FolderAdd16}
+      icon={FolderAdd}
       kind="secondary"
       on:click={ () => isAddModalVisible = true }
     >Utwórz nową kolekcję</Button>

@@ -1,12 +1,12 @@
 <script lang="ts">
   export let rate: number
 
-  import StarFilled16 from 'carbon-icons-svelte/lib/StarFilled16'
+  import StarFilled from 'carbon-icons-svelte/lib/StarFilled.svelte'
 </script>
 
 <div class="rating">
   <div>
-    <StarFilled16 class="rating__icon" />
+    <StarFilled size={16} class="rating__icon" />
   </div>
 
   <div class="rating__value">

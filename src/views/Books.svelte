@@ -8,9 +8,9 @@
   import SearchModal from '../lib/SearchModal.svelte'
   import SortingModal from '../lib/SortingModal.svelte'
   import AddModal from '../lib/AddModal.svelte'
-  import BookmarkAdd16 from 'carbon-icons-svelte/lib/BookmarkAdd16'
-  import Search16 from 'carbon-icons-svelte/lib/Search16'
-  import SortDescending16 from 'carbon-icons-svelte/lib/SortDescending16'
+  import BookmarkAdd from 'carbon-icons-svelte/lib/BookmarkAdd.svelte'
+  import Search from 'carbon-icons-svelte/lib/Search.svelte'
+  import SortDescending from 'carbon-icons-svelte/lib/SortDescending.svelte'
   import { Button, Content, InlineLoading } from 'carbon-components-svelte'
 
   let books: BooksArray = []
@@ -126,7 +126,7 @@
 
       <div class="books__footer">
         <Button
-          icon={BookmarkAdd16}
+          icon={BookmarkAdd}
           kind="secondary"
           on:click={ () => isAddModalVisible = true }
         >Dodaj kolejną książkę</Button>
@@ -136,7 +136,7 @@
           iconDescription="Kliknij, aby wyszukać... (/)"
           hasIconOnly
           tooltipPosition="top"
-          icon={Search16}
+          icon={Search}
           on:click={() => isSearchVisible = true}
         />
 
@@ -145,7 +145,7 @@
           iconDescription="Opcje sortowania"
           hasIconOnly
           tooltipPosition="top"
-          icon={SortDescending16}
+          icon={SortDescending}
           on:click={() => isSortingVisible = true}
         />
       </div>
