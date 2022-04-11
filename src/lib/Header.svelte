@@ -7,7 +7,9 @@
     SideNav,
     SideNavItems,
     SideNavLink,
-    SkipToContent
+    SkipToContent,
+    HeaderUtilities,
+    HeaderSearch
   } from 'carbon-components-svelte'
   import { navigate } from 'svelte-routing'
   import ProfileBar from '../lib/ProfileBar.svelte'
@@ -22,11 +24,18 @@
   }
 </script>
 
-<Header platformName={ title } bind:isSideNavOpen>
+<Header platformName={ "" || title } bind:isSideNavOpen>
   <div slot="skip-to-content">
     <SkipToContent />
   </div>
+  <HeaderUtilities>
+    <HeaderSearch
+      placeholder="Search services"
+    />
+  </HeaderUtilities>
 </Header>
+
+<!-- <SiteHeader {title} /> -->
 
 <SideNav bind:isOpen={ isSideNavOpen }>
   <SideNavItems>
@@ -53,3 +62,21 @@
     />
   </SideNavItems>
 </SideNav>
+
+<style>
+  :global(a.bx--header__name) {
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+  }
+
+  :global([role="search"].s-qIO5oRXzFdSn.s-qIO5oRXzFdSn.active) {
+    width: 100vw !important;
+    margin-left: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 0 !important;
+    outline: 0 !important;
+    background-color: #161616;
+  }
+</style>
