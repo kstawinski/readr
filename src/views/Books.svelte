@@ -7,16 +7,12 @@
   import Book from '../lib/Book.svelte'
   import SortingModal from '../lib/SortingModal.svelte'
   import AddModal from '../lib/AddModal.svelte'
-  import BookmarkAdd from 'carbon-icons-svelte/lib/BookmarkAdd.svelte'
-  import Search from 'carbon-icons-svelte/lib/Search.svelte'
-  import SortDescending from 'carbon-icons-svelte/lib/SortDescending.svelte'
-  import { Button, Content, InlineLoading } from 'carbon-components-svelte'
+  import { Content, InlineLoading } from 'carbon-components-svelte'
 
   let books: BooksArray = []
   let booksUnmodifiedArray: BooksArray = []
   let collections: CollectionsArray = []
   let isLoading = true
-  let isSearchVisible = false
   let isSortingVisible = false
   let isAddModalVisible = false
 
@@ -31,13 +27,6 @@
         isLoading = false
       })
     })
-
-  // On slash click while search is not visible
-  window.addEventListener('keyup', (event) => {
-    if (!isSearchVisible && event.code === 'Slash') {
-      isSearchVisible = true
-    }
-  });
 
   const updateSort = (options: SortingOptions) => {
     isSortingVisible = false
@@ -127,32 +116,6 @@
           />
         {/each}
       </div>
-
-      <div class="books__footer">
-        <Button
-          icon={BookmarkAdd}
-          kind="secondary"
-          on:click={ () => isAddModalVisible = true }
-        >Dodaj kolejną książkę</Button>
-
-        <Button
-          kind="ghost"
-          iconDescription="Kliknij, aby wyszukać... (/)"
-          hasIconOnly
-          tooltipPosition="top"
-          icon={Search}
-          on:click={() => isSearchVisible = true}
-        />
-
-        <Button
-          kind="ghost"
-          iconDescription="Opcje sortowania"
-          hasIconOnly
-          tooltipPosition="top"
-          icon={SortDescending}
-          on:click={() => isSortingVisible = true}
-        />
-      </div>
     </Content>
   {/if}
 </main>
@@ -173,15 +136,5 @@
       grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
       gap: 15px;
     }
-  }
-
-  :global(.books__footer::before) {
-    // background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgb(255 255 255 / 52%) 25%, rgba(255,255,255,0) 100%);
-    width: 100%;
-    height: 100px;
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
   }
 </style>
