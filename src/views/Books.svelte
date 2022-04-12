@@ -5,7 +5,6 @@
   import { Collections } from '../hooks/Collections'
   import Header from '../lib/Header.svelte'
   import Book from '../lib/Book.svelte'
-  import SearchModal from '../lib/SearchModal.svelte'
   import SortingModal from '../lib/SortingModal.svelte'
   import AddModal from '../lib/AddModal.svelte'
   import BookmarkAdd from 'carbon-icons-svelte/lib/BookmarkAdd.svelte'
@@ -99,12 +98,6 @@
     title={PAGE_TITLE}
     on:open-add-modal={ () => isAddModalVisible = true }
     on:search={ ({ detail }) => useSearch(detail) }
-  />
-
-  <SearchModal
-    books={booksUnmodifiedArray}
-    open={isSearchVisible}
-    on:close={() => isSearchVisible = false}
   />
 
   <AddModal
