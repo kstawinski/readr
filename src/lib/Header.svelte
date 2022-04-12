@@ -79,4 +79,8 @@
     outline: 0 !important;
     background-color: #161616;
   }
+
+  :global(.bx--header__action) {
+    background: none !important;
+  }
 </style>
