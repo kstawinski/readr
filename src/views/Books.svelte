@@ -80,12 +80,25 @@
   }
 
   const removeBookFromArray = (id: string) => books = books.filter(book => book.id !== id)
+
+  const useSearch = (keyword: string): void => {
+    if (keyword.length > 2) {
+      const searchValue = keyword.toLowerCase()
+      books = books.filter(book =>
+        book.title.toLowerCase().includes(searchValue)
+        || book.author.toLowerCase().includes(searchValue)
+      )
+    } else if (keyword.length === 0) { // on close field / delete value from input 
+      books = booksUnmodifiedArray
+    }
+  }
 </script>
 
 <main>
   <Header
     title={PAGE_TITLE}
     on:open-add-modal={ () => isAddModalVisible = true }
+    on:search={ ({ detail }) => useSearch(detail) }
   />
 
   <SearchModal

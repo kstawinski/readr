@@ -15,6 +15,7 @@
   import ProfileBar from '../lib/ProfileBar.svelte'
 
   let isSideNavOpen = false
+  let searchValue: string
 
   const dispatch = createEventDispatcher()
 
@@ -30,7 +31,10 @@
   </div>
   <HeaderUtilities>
     <HeaderSearch
-      placeholder="Search services"
+      placeholder="Czego szukasz?"
+      bind:value={ searchValue }
+      on:input={ () => dispatch('search', searchValue) }
+      on:clear={ () => dispatch('search', '') }
     />
   </HeaderUtilities>
 </Header>
