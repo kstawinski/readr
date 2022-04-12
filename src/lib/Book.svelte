@@ -79,6 +79,7 @@
       height: 100%;
       background-size: cover;
       background-position: center center;
+      border-radius: 2px;
     }
     &__text {
       line-height: 1.3;
