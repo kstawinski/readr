@@ -44,7 +44,7 @@
 >
   <svelte:fragment slot="content">
     <Row>
-      <Column md={2} noGutterLeft>
+      <Column md={2} sm={2} noGutterLeft>
         <ImageLoader src={ book.thumbnail }>
           <div slot="loading">
             <InlineLoading />
@@ -53,7 +53,7 @@
         </ImageLoader>
       </Column>
 
-      <Column md={6} class="book">
+      <Column sm={12} md={6} class="book">
         <div class="book__group">
           {#if book.description}
             <p class="book__description">{ book.description }</p>
@@ -134,17 +134,26 @@
   .book {
     padding: 20px;
 
+    &__image {
+      border-radius: 4px;
+    }
     &__caption {
       font-size: small;
       color: gray;
     }
     &__group {
       &:not(:last-child) {
-        margin-bottom: 20px;
+        margin-bottom: 30px;
       }
     }
     &__description {
-      margin-bottom: 15px;
+      margin: 25px 0;
+      line-height: 1.5;
     }
+  }
+
+  // Fix book description width
+  :global(.bx--modal-content p) {
+    padding-right: 0 !important;
   }
 </style>
