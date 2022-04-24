@@ -9,10 +9,12 @@
     SideNavLink,
     SkipToContent,
     HeaderUtilities,
-    HeaderSearch
+    HeaderSearch,
+    HeaderGlobalAction
   } from 'carbon-components-svelte'
   import { navigate } from 'svelte-routing'
   import ProfileBar from '../lib/ProfileBar.svelte'
+  import { SettingsAdjust } from 'carbon-icons-svelte';
 
   let isSideNavOpen = false
   let searchValue: string
@@ -30,6 +32,12 @@
     <SkipToContent />
   </div>
   <HeaderUtilities>
+    <HeaderGlobalAction
+      aria-label="Ustawienia sortowania"
+      icon={SettingsAdjust}
+      on:click={() => dispatch('open-sorting-modal')}
+    />
+
     <HeaderSearch
       placeholder="Czego szukasz?"
       bind:value={ searchValue }
@@ -38,8 +46,6 @@
     />
   </HeaderUtilities>
 </Header>
-
-<!-- <SiteHeader {title} /> -->
 
 <SideNav bind:isOpen={ isSideNavOpen }>
   <SideNavItems>
@@ -75,13 +81,17 @@
 
   :global([role="search"].s-qIO5oRXzFdSn.s-qIO5oRXzFdSn.active) {
     width: 100vw !important;
-    margin-left: 0;
     position: absolute;
     top: 0;
     left: 0;
     border: 0 !important;
     outline: 0 !important;
     background-color: #161616;
+    margin-left: 0 !important;
+  }
+
+  :global([role="search"]) {
+    margin-left: 0 !important;
   }
 
   :global(.bx--header__action) {

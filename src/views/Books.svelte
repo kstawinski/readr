@@ -86,6 +86,7 @@
   <Header
     title={PAGE_TITLE}
     on:open-add-modal={ () => isAddModalVisible = true }
+    on:open-sorting-modal={ () => isSortingVisible = true }
     on:search={ ({ detail }) => useSearch(detail) }
   />
 
