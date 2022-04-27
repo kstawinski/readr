@@ -45,7 +45,7 @@
   <svelte:fragment slot="content">
     <Row>
       <Column sm={{ span: 2, offset: 1 }} md={{ span: 2, offset: 0 }} noGutterLeft>
-        <ImageLoader src={ book.thumbnail }>
+        <ImageLoader src={ book.thumbnail } class="book__cover">
           <div slot="loading">
             <InlineLoading />
           </div>
@@ -64,11 +64,13 @@
               subtitle="Nie dodano notatki dla tej książki."
             />
           {/if}
-
-          {#if book.rate}
-            <BookRating value={book.rate} />
-          {/if}
         </div>
+
+        {#if book.rate}
+          <div class="book__group">
+            <BookRating value={book.rate} />
+          </div>
+        {/if}
 
         <div class="book__group">
           <Row>
@@ -133,10 +135,7 @@
 <style lang="scss">
   .book {
     padding: 20px;
-
-    &__image {
-      border-radius: 4px;
-    }
+  
     &__caption {
       font-size: small;
       color: gray;
@@ -147,13 +146,19 @@
       }
     }
     &__description {
-      margin: 25px 0;
-      line-height: 1.5;
+      line-height: 1.6;
     }
   }
 
   // Fix book description width
   :global(.bx--modal-content p) {
     padding-right: 0 !important;
+  }
+
+  @media only screen and (max-width: 576px) {
+    :global(.book__cover) {
+      border-radius: 3px;
+      margin: 15px 0 30px 0;
+    }
   }
 </style>
