@@ -44,7 +44,7 @@
 >
   <svelte:fragment slot="content">
     <Row>
-      <Column md={2} sm={2} noGutterLeft>
+      <Column sm={{ span: 2, offset: 1 }} md={{ span: 2, offset: 0 }} noGutterLeft>
         <ImageLoader src={ book.thumbnail }>
           <div slot="loading">
             <InlineLoading />
