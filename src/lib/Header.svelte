@@ -39,6 +39,7 @@
     />
 
     <HeaderSearch
+      class="header__search"
       placeholder="Czego szukasz?"
       bind:value={ searchValue }
       on:input={ () => dispatch('search', searchValue) }
@@ -79,14 +80,14 @@
     font-weight: 600 !important;
   }
 
-  :global([role="search"].s-qIO5oRXzFdSn.s-qIO5oRXzFdSn.active) {
+  :global([role="search"].active) {
     width: 100vw !important;
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
     border: 0 !important;
     outline: 0 !important;
-    background-color: #161616;
+    background-color: #161616 !important;
     margin-left: 0 !important;
   }
 
