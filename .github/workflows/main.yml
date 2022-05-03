@@ -22,6 +22,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+      
+      # Setup Node.js env
+      - name: ⚙️ Setup Node.js environment
+        uses: actions/setup-node@v3.1.1
+        with:
+          node-version: 14
+      - run: npm install
+      - run: npm test
 
       # Runs a single command using the runners shell
       - name: ⚡️ Build app
