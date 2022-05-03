@@ -17,6 +17,7 @@
   import Book from 'carbon-icons-svelte/lib/Book.svelte'
   import Time from 'carbon-icons-svelte/lib/Time.svelte'
   import Calendar from 'carbon-icons-svelte/lib/Calendar.svelte'
+  import Cloud from 'carbon-icons-svelte/lib/Cloud.svelte'
   import Folder from 'carbon-icons-svelte/lib/Folder.svelte'
   import BookInfo from '../lib/BookInfo.svelte'
   import BookRating from '../lib/BookRating.svelte'
@@ -66,11 +67,23 @@
           {/if}
         </div>
 
-        {#if book.rate}
-          <div class="book__group">
-            <BookRating value={book.rate} />
-          </div>
-        {/if}
+        <div class="book__group">
+          <Row>
+            {#if book.rate}
+              <Column>
+                <BookRating value={book.rate} />
+              </Column>
+            {/if}
+
+            {#if book.isEbook}
+            <Column>
+              <div class="book__tag">
+                <Tag icon={Cloud} type="blue">E-book</Tag>
+              </div>
+            </Column>
+            {/if}
+          </Row>
+        </div>
 
         <div class="book__group">
           <Row>
@@ -142,11 +155,14 @@
     }
     &__group {
       &:not(:last-child) {
-        margin-bottom: 30px;
+        margin-bottom: 25px;
       }
     }
     &__description {
       line-height: 1.6;
+    }
+    &__tag {
+      text-align: right;
     }
   }
 

@@ -20,7 +20,8 @@
     NumberInput,
     ImageLoader,
     Button,
-    MultiSelect
+    MultiSelect,
+    Toggle
   } from 'carbon-components-svelte'
   import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte'
 
@@ -82,6 +83,12 @@
           <FormGroup legendText="Szczegóły">
             <div class="book__field"><NumberInput hideSteppers placeholder="Rok publikacji" bind:value={book.publishedAt} /></div>
             <div class="book__field"><NumberInput hideSteppers placeholder="Liczba stron" bind:value={book.pages} /></div>
+
+            <Toggle
+              labelA="Oznacz jako e-book"
+              labelB="Oznacz jako e-book"
+              bind:toggled={ book.isEbook }
+            />
           </FormGroup>
 
           <FormGroup legendText="Twoja ocena">
