@@ -4,6 +4,7 @@ interface Book {
   isbn: number
   title: string
   author: string
+  isEbook?: boolean
   thumbnail: string
   addDate: Timestamp
   collections?: Array<string>
