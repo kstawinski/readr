@@ -14,13 +14,17 @@
     ModalFooter,
     TextInput,
     OrderedList,
-    ListItem
+    ListItem,
+Tag,
+Row
   } from 'carbon-components-svelte'
   import FolderAdd from 'carbon-icons-svelte/lib/FolderAdd.svelte'
   import { Books } from '../hooks/Books'
   import { Collections } from '../hooks/Collections'
   import Header from '../lib/Header.svelte'
   import { Link } from 'svelte-routing'
+  import Book from '../lib/Book.svelte'
+import { Information } from 'carbon-icons-svelte'
 
   let books: BooksArray = []
   let collections: CollectionsArray = []
@@ -55,7 +59,17 @@
       .catch(error => console.error(error))
   }
 
-  const collectionFilter = (id: string) => books.filter(book => (book.collections || []).includes(id))
+  let collectionID = '';
+
+  const filterByCollection = (id: string) => {
+    collectionID = id;
+
+    if (id) {
+      return books.filter(book => (book.collections || []).includes(id));
+    } else {
+      return books;
+    }
+  }
 </script>
 
 <main>
@@ -84,25 +98,36 @@
   {/if}
 
   <Content>
-    {#each collections as collection}
-      <Tile class="collections__tile">
-        <div class="collections__title">{ collection.text }</div>
+    <div class="collections__tags">
+      {#each collections as collection}
+        <Tag interactive on:click={() => filterByCollection(collection.id) }>{ collection.text }</Tag>
+      {:else}
+        <div class="loader">
+          <InlineLoading />
+        </div>
+      {/each}
+    </div>
 
-        <OrderedList class="collections__list">
-          {#each collectionFilter(collection.id) as book}
-            <ListItem>
-              <Link to={`/book/${book.id}`}>
-                { book.title } ({ book.author })
-              </Link>
-            </ListItem>
-          {/each}
-        </OrderedList>
-      </Tile>
-    {:else}
-      <div class="loader">
-        <InlineLoading />
-      </div>
-    {/each}
+    {#if !collectionID}
+    <div class="collections__hintBlock">
+      <Information/>
+
+      <p class="collections__hint">
+        Aktualnie wyświetlasz wszystkie dodane pozycje.
+        Wybierz kategorię, aby rozpocząć filtrowanie.
+      </p>
+    </div>
+    {/if}
+
+    <!-- books -->
+    <div class="collections__books">
+      {#each filterByCollection(collectionID) as book (book.id)}
+        <Book
+          {book}
+          {collections}
+        />
+      {/each}
+    </div>
   </Content>
 
   <div class="collections__footer">
@@ -120,6 +145,31 @@
       &:not(:last-child) {
         margin-bottom: 5px;
       }
+    }
+    &__tags {
+      > button:first-child {
+        margin: .25rem .25rem .25rem 0;
+      }
+    }
+    &__hintBlock {
+      opacity: 0.5;
+      margin-top: 15px;
+      display: flex;
+      align-items: flex-start;
+
+      > svg {
+        width: 70px;
+      }
+    }
+    &__hint {
+      font-size: 14px;
+      line-height: 1.35;
+    }
+    &__books {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 15px;
     }
     &__footer {
       position: fixed;
