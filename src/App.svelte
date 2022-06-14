@@ -3,7 +3,6 @@
   import AuthProxy from './views/AuthProxy.svelte'
   import Login from './views/Login.svelte'
   import Books from './views/Books.svelte'
-  import Collections from './views/Collections.svelte'
   import { Auth } from './hooks/Auth'
   import LogoutSection from './lib/LogoutSection.svelte'
 
