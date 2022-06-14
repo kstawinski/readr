@@ -43,6 +43,7 @@
   on:close={() => isEditModalVisible = false}
   on:cancel={() => switchModals() }
   on:delete={() => deleteBook(book.id)}
+  on:edit={() => dispatch('successEdit')}
 />
 
 <div class="book">

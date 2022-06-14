@@ -35,7 +35,10 @@
       ...book,
       lastModifiedDate: new Date()
     })
-      .then(() => alert('Edytowano poprawnie'))
+      .then(() => {
+        dispatch('edit')
+        dispatch('close')
+      })
       .catch(() => alert('Wystąpił błąd 😢'))
   }
 

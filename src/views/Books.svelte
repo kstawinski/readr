@@ -9,7 +9,6 @@
   import AddModal from '../lib/AddModal.svelte'
   import { Button, ComposedModal, Content, InlineLoading, ModalBody, ModalFooter, ModalHeader, Tag, TextInput } from 'carbon-components-svelte'
   import { Add, Information, Reset } from 'carbon-icons-svelte';
-import { reload } from 'firebase/auth'
 
   let books: BooksArray = []
   let booksUnmodifiedArray: BooksArray = []
@@ -18,17 +17,19 @@ import { reload } from 'firebase/auth'
   let isSortingVisible = false
   let isAddModalVisible = false
 
-  Books.getAllBooks()
-    .then(booksArr => {
-      books = booksArr
-      booksUnmodifiedArray = booksArr
-      updateSort({ method: 'editDes', isRatingRequired: false })
+  const fetchData = () => {
+    Books.getAllBooks()
+      .then(booksArr => {
+        books = booksArr
+        booksUnmodifiedArray = booksArr
+        updateSort({ method: 'editDes', isRatingRequired: false })
 
-      Collections.getAll().then(collectionsArr => {
-        collections = collectionsArr
-        isLoading = false
+        Collections.getAll().then(collectionsArr => {
+          collections = collectionsArr
+          isLoading = false
+        })
       })
-    })
+  }
 
   const updateSort = (options: SortingOptions) => {
     isSortingVisible = false
@@ -109,10 +110,13 @@ import { reload } from 'firebase/auth'
     Collections.create(name)
       .then(() => {
         // fetchCollections()
+        fetchData()
         isAddModalVisible = false
       })
       .catch(error => console.error(error))
   }
+
+  fetchData()
 </script>
 
 <main>
@@ -127,6 +131,7 @@ import { reload } from 'firebase/auth'
     label="Nowa książka" title="Dodaj przez ISBN"
     open={ isAddModalVisible }
     on:close={ () => isAddModalVisible = false }
+    on:success={ () => fetchData() }
   />
 
   <SortingModal
@@ -173,6 +178,7 @@ import { reload } from 'firebase/auth'
             {book}
             {collections}
             on:delete={({ detail }) => removeBookFromArray(detail)}
+            on:successEdit={ () => fetchData() }
           />
         {/each}
       </div>
