@@ -4,34 +4,31 @@
   import { createEventDispatcher } from 'svelte'
   import {
     Header,
-    SideNav,
-    SideNavItems,
-    SideNavLink,
     SkipToContent,
     HeaderUtilities,
     HeaderSearch,
     HeaderGlobalAction
   } from 'carbon-components-svelte'
-  import { navigate } from 'svelte-routing'
-  import ProfileBar from '../lib/ProfileBar.svelte'
-  import { SettingsAdjust } from 'carbon-icons-svelte';
+  import { Add, SettingsAdjust } from 'carbon-icons-svelte';
 
   let isSideNavOpen = false
   let searchValue: string
 
   const dispatch = createEventDispatcher()
-
-  const logout = () => {
-    localStorage.clear()
-    navigate('/login', { replace: true })
-  }
 </script>
 
 <Header platformName={ "" || title } bind:isSideNavOpen>
   <div slot="skip-to-content">
     <SkipToContent />
   </div>
+
   <HeaderUtilities>
+    <HeaderGlobalAction
+      aria-label="Dodaj ksiażkę"
+      icon={Add}
+      on:click={() => dispatch('open-add-modal')}
+    />
+
     <HeaderGlobalAction
       aria-label="Ustawienia sortowania"
       icon={SettingsAdjust}
@@ -47,32 +44,6 @@
     />
   </HeaderUtilities>
 </Header>
-
-<SideNav bind:isOpen={ isSideNavOpen }>
-  <SideNavItems>
-    <SideNavLink
-      text="Biblioteka"
-      on:click={ () => navigate('/') }
-    />
-
-    <SideNavLink
-      text="Dodaj książkę"
-      on:click={ () => dispatch('open-add-modal') }
-    />
-
-    <SideNavLink
-      text="Lista kolekcji"
-      on:click={ () => navigate('/collections') }
-    />
-
-    <ProfileBar />
-
-    <SideNavLink
-      text="Wyloguj się"
-      on:click={ () => logout() }
-    />
-  </SideNavItems>
-</SideNav>
 
 <style>
   :global(a.bx--header__name) {

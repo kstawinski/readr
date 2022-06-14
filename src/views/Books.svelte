@@ -7,7 +7,9 @@
   import Book from '../lib/Book.svelte'
   import SortingModal from '../lib/SortingModal.svelte'
   import AddModal from '../lib/AddModal.svelte'
-  import { Content, InlineLoading } from 'carbon-components-svelte'
+  import { Button, ComposedModal, Content, InlineLoading, ModalBody, ModalFooter, ModalHeader, Tag, TextInput } from 'carbon-components-svelte'
+  import { Add, Information, Reset } from 'carbon-icons-svelte';
+import { reload } from 'firebase/auth'
 
   let books: BooksArray = []
   let booksUnmodifiedArray: BooksArray = []
@@ -30,6 +32,8 @@
 
   const updateSort = (options: SortingOptions) => {
     isSortingVisible = false
+    // reset "filter by category"
+    collectionID = ''
 
     const booksArray = options.isRatingRequired ?
       booksUnmodifiedArray.filter(book => book.rate)
@@ -71,14 +75,43 @@
 
   const useSearch = (keyword: string): void => {
     if (keyword.length > 2) {
+      // reset "filter by category"
+      collectionID = ''
+
       const searchValue = keyword.toLowerCase()
-      books = books.filter(book =>
+      books = booksUnmodifiedArray.filter(book =>
         book.title.toLowerCase().includes(searchValue)
         || book.author.toLowerCase().includes(searchValue)
       )
     } else if (keyword.length === 0) { // on close field / delete value from input 
       books = booksUnmodifiedArray
     }
+  }
+
+  let collectionID = ''
+
+  const filterByCollection = (collectionIdentifier: string) => {
+    collectionID = collectionIdentifier
+
+    if (collectionIdentifier) {
+      books = booksUnmodifiedArray.filter(book => (book.collections || []).includes(collectionIdentifier))
+    } else {
+      books = booksUnmodifiedArray
+    }
+  }
+
+  const createCollectionForm = {
+    isModal: false,
+    name: ''
+  }
+
+  const addCollection = (name: string) => {
+    Collections.create(name)
+      .then(() => {
+        // fetchCollections()
+        isAddModalVisible = false
+      })
+      .catch(error => console.error(error))
   }
 </script>
 
@@ -108,6 +141,32 @@
     </div>
   {:else}
     <Content>
+      <!-- collections list -->
+      <div class="books__tags">
+        {#each collections as collection}
+          <Tag interactive on:click={() => filterByCollection(collection.id) }>{ collection.text }</Tag>
+        {/each}
+
+        <!-- show all tag -->
+        <Tag interactive type="outline" icon={Reset} on:click={() => filterByCollection("") }>Wszystkie ({ booksUnmodifiedArray.length })</Tag>
+
+        <!-- new collection tag -->
+        <Tag interactive type="outline" icon={Add} on:click={() => createCollectionForm.isModal = true }>Utwórz kolekcję</Tag>
+      </div>
+  
+      <!-- collections notification -->
+      {#if !collectionID}
+      <div class="books__hintBlock">
+        <Information />
+  
+        <p class="books__hint">
+          Aktualnie wyświetlasz wszystkie dodane pozycje.
+          Wybierz kategorię, aby rozpocząć filtrowanie.
+        </p>
+      </div>
+      {/if}
+
+      <!-- books list -->
       <div class="books__list">
         {#each books as book (book.id)}
           <Book
@@ -117,11 +176,34 @@
           />
         {/each}
       </div>
+
+      <!-- add collection modal -->
+      {#if createCollectionForm.isModal}
+      <ComposedModal bind:open={createCollectionForm.isModal}>
+        <ModalHeader title="Nowa kolekcja" />
+        <ModalBody hasForm>
+          <TextInput
+            size="xl"
+            hideLabel
+            placeholder="Wprowadź nazwę kolekcji..."
+            bind:value={createCollectionForm.name}
+          />
+        </ModalBody>
+        <ModalFooter>
+          <Button kind="secondary">Anuluj</Button>
+          <Button
+            kind="primary"
+            disabled={!(createCollectionForm.name.length > 3)}
+            on:click={() => addCollection(createCollectionForm.name)}
+          >Dodaj kolekcję</Button>
+        </ModalFooter>
+      </ComposedModal>
+      {/if}
     </Content>
   {/if}
 </main>
 
-<style lang="scss">
+<style lang="scss" global>
   .books {
     &__footer {
       position: fixed;
@@ -136,6 +218,26 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
       gap: 15px;
+      margin-top: 20px;
+    }
+    &__tags {
+      > button:first-child {
+        margin: .25rem .25rem .25rem 0;
+      }
+    }
+    &__hintBlock {
+      opacity: 0.5;
+      margin-top: 15px;
+      display: flex;
+      align-items: flex-start;
+
+      > svg {
+        width: 70px;
+      }
+    }
+    &__hint {
+      font-size: 14px;
+      line-height: 1.35;
     }
   }
 </style>

@@ -5,6 +5,7 @@
   import Books from './views/Books.svelte'
   import Collections from './views/Collections.svelte'
   import { Auth } from './hooks/Auth'
+  import LogoutSection from './lib/LogoutSection.svelte'
 
   export let url = ''
 
@@ -20,7 +21,8 @@
     {/if}
     <Route path="login" component={Login} />
     <AuthProxy path="/books" component={Books} />
-    <AuthProxy path="/collections" component={Collections} />
+
+    <LogoutSection />
   </Router>
 </div>
 
