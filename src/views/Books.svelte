@@ -176,7 +176,7 @@
         {#each books as book (book.id)}
           <Book
             {book}
-            {collections}
+            collections={collections || []}
             on:delete={({ detail }) => removeBookFromArray(detail)}
             on:successEdit={ () => fetchData() }
           />

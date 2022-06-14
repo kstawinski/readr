@@ -18,6 +18,12 @@
     isBookModalVisible = !isBookModalVisible
   }
 
+  const closeModalsAfterSuccess = () => {
+    isEditModalVisible = false
+    isBookModalVisible = false
+    dispatch('successEdit')
+  }
+
   const deleteBook = (id: string) => {
     Books.delete(id)
       .then(() => {
@@ -31,7 +37,7 @@
 
 <BookModal
   {book}
-  {collections}
+  collections={collections || []}
   open={isBookModalVisible}
   on:close={ () => isBookModalVisible = false }
   on:edit={ () => switchModals() }
@@ -43,7 +49,7 @@
   on:close={() => isEditModalVisible = false}
   on:cancel={() => switchModals() }
   on:delete={() => deleteBook(book.id)}
-  on:edit={() => dispatch('successEdit')}
+  on:edit={() => closeModalsAfterSuccess()}
 />
 
 <div class="book">

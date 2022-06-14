@@ -102,8 +102,8 @@
             addDoc(collection(db, 'books'), book)
               .then(() => {
                 isSuccess = true
-                dispatch('success')
                 closeModal()
+                dispatch('success')
               })
               .catch(error => console.error(error))
           })
