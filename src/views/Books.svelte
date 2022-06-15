@@ -8,7 +8,7 @@
   import SortingModal from '../lib/SortingModal.svelte'
   import AddModal from '../lib/AddModal.svelte'
   import { Button, ComposedModal, Content, InlineLoading, ModalBody, ModalFooter, ModalHeader, Tag, TextInput } from 'carbon-components-svelte'
-  import { Add, Information, Reset } from 'carbon-icons-svelte';
+  import { Add, CollapseAll, Information } from 'carbon-icons-svelte'
 
   let books: BooksArray = []
   let booksUnmodifiedArray: BooksArray = []
@@ -160,7 +160,7 @@
         <Tag
           interactive
           type={ collectionID === "" ? 'high-contrast' : 'outline' }
-          icon={Reset}
+          icon={CollapseAll}
           on:click={() => filterByCollection("") }
         >Wszystkie ({ booksUnmodifiedArray.length })</Tag>
 
