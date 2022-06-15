@@ -149,11 +149,20 @@
       <!-- collections list -->
       <div class="books__tags">
         {#each collections as collection}
-          <Tag interactive on:click={() => filterByCollection(collection.id) }>{ collection.text }</Tag>
+          <Tag
+            interactive
+            on:click={() => filterByCollection(collection.id) }
+            type={ collectionID === collection.id ? 'high-contrast' : undefined }
+          >{ collection.text }</Tag>
         {/each}
 
         <!-- show all tag -->
-        <Tag interactive type="outline" icon={Reset} on:click={() => filterByCollection("") }>Wszystkie ({ booksUnmodifiedArray.length })</Tag>
+        <Tag
+          interactive
+          type={ collectionID === "" ? 'high-contrast' : 'outline' }
+          icon={Reset}
+          on:click={() => filterByCollection("") }
+        >Wszystkie ({ booksUnmodifiedArray.length })</Tag>
 
         <!-- new collection tag -->
         <Tag interactive type="outline" icon={Add} on:click={() => createCollectionForm.isModal = true }>Utwórz kolekcję</Tag>
