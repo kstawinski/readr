@@ -54,7 +54,7 @@
         </ImageLoader>
       </Column>
 
-      <Column sm={12} md={6} class="book">
+      <Column sm={12} md={8} class="book">
         <div class="book__group">
           {#if book.description}
             <p class="book__description">{ book.description }</p>
@@ -169,6 +169,10 @@
   // Fix book description width
   :global(.bx--modal-content p) {
     padding-right: 0 !important;
+  }
+
+  :global(.bx--inline-notification) {
+    max-width: 100% !important;
   }
 
   @media only screen and (max-width: 576px) {

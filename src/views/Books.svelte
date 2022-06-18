@@ -135,9 +135,9 @@
   />
 
   <SortingModal
-    open={isSortingVisible}
-    on:close={() => isSortingVisible = false}
-    on:change={({ detail }) => updateSort(detail)}
+    open={ isSortingVisible }
+    on:close={ () => isSortingVisible = false }
+    on:change={ ({ detail }) => updateSort(detail) }
   />
 
   {#if isLoading}
@@ -151,7 +151,7 @@
         {#each collections as collection}
           <Tag
             interactive
-            on:click={() => filterByCollection(collection.id) }
+            on:click={ () => filterByCollection(collection.id) }
             type={ collectionID === collection.id ? 'high-contrast' : undefined }
           >{ collection.text }</Tag>
         {/each}
@@ -160,12 +160,17 @@
         <Tag
           interactive
           type={ collectionID === "" ? 'high-contrast' : 'outline' }
-          icon={CollapseAll}
-          on:click={() => filterByCollection("") }
+          icon={ CollapseAll }
+          on:click={ () => filterByCollection("") }
         >Wszystkie ({ booksUnmodifiedArray.length })</Tag>
 
         <!-- new collection tag -->
-        <Tag interactive type="outline" icon={Add} on:click={() => createCollectionForm.isModal = true }>Utwórz kolekcję</Tag>
+        <Tag
+          interactive
+          type="outline"
+          icon={Add}
+          on:click={ () => createCollectionForm.isModal = true }
+        >Utwórz kolekcję</Tag>
       </div>
   
       <!-- collections notification -->
