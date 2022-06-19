@@ -2,93 +2,89 @@
   export let title: string
   export let hideUtilities: boolean
 
-  import { beforeUpdate, createEventDispatcher } from 'svelte'
+  import { createEventDispatcher } from 'svelte'
   import {
     Header,
     SkipToContent,
     HeaderUtilities,
     HeaderSearch,
     HeaderGlobalAction,
-OverflowMenu,
-OverflowMenuItem,
-Dropdown
+    OverflowMenu,
+    OverflowMenuItem,
+    ImageLoader
   } from 'carbon-components-svelte'
-  import { Add, SettingsAdjust } from 'carbon-icons-svelte';
-import { navigate } from 'svelte-routing';
+  import { Add, SettingsAdjust } from 'carbon-icons-svelte'
+  import { navigate } from 'svelte-routing'
 
   let isSideNavOpen = false
   let searchValue: string
 
   const dispatch = createEventDispatcher()
 
-  // Clear the style if empty string
-	// beforeUpdate (() => {
-	// 	hideUtilities = hideUtilities || undefined
-	// })
+  // LOGOUT
+  import { Store } from '../hooks/Store'
+
+  const user = {
+    name: Store.getItem('name'),
+    email: Store.getItem('email'),
+    photo: Store.getItem('photo')
+  }
+
+  const logout = () => {
+    localStorage.clear()
+    navigate('/login')
+  }
 </script>
 
 <Header platformName={ "" || title } bind:isSideNavOpen>
   <div slot="skip-to-content">
     <SkipToContent />
   </div>
-
-  {#if !hideUtilities}
+  
   <HeaderUtilities>
-    <!-- <HeaderGlobalAction>
-      <OverflowMenu flipped icon={Add}>
-        <OverflowMenuItem text="Manage credentials" />
-        <OverflowMenuItem
-          href="https://cloud.ibm.com/docs/api-gateway/"
-          text="API documentation"
-        />
-        <OverflowMenuItem danger text="Delete service" />
-      </OverflowMenu>
-
-    </HeaderGlobalAction> -->
-      <!-- aria-label="Dodaj ksiażkę"
-      icon={Add}
-      on:click={() => dispatch('open-add-modal')}
-    /> -->
-
-    <OverflowMenu style="width: auto;" flipped open>
-      <div slot="menu" class="bx--header__action">
-        <HeaderGlobalAction
-          aria-label="Dodaj nową książkę"
-          icon={Add}
-        />
-      </div>
-      <OverflowMenuItem
-        text="Szukaj książki..."
+    {#if !hideUtilities}
+      <HeaderGlobalAction
+        aria-label="Dodaj nową książkę"
+        icon={Add}
         on:click={ () => navigate('/search') }
       />
-      <OverflowMenuItem text="Wprowadź ISBN" />
+
+      <HeaderGlobalAction
+        aria-label="Ustawienia sortowania"
+        icon={SettingsAdjust}
+        on:click={ () => dispatch('open-sorting-modal') }
+      />
+
+      <HeaderSearch
+        class="header__search"
+        placeholder="Czego szukasz?"
+        bind:value={ searchValue }
+        on:input={ () => dispatch('search', searchValue) }
+        on:clear={ () => dispatch('search', '') }
+      />
+    {/if}
+
+    <OverflowMenu style="width: auto;" flipped>
+      <div slot="menu" class="header__photo">
+        <ImageLoader fadeIn src={user.photo} />
+      </div>
+
+      <OverflowMenuItem
+        text="Wyloguj się"
+        on:click={ () => logout() }
+      />
     </OverflowMenu>
-
-    <HeaderGlobalAction
-      aria-label="Ustawienia sortowania"
-      icon={SettingsAdjust}
-      on:click={() => dispatch('open-sorting-modal')}
-    />
-
-    <HeaderSearch
-      class="header__search"
-      placeholder="Czego szukasz?"
-      bind:value={ searchValue }
-      on:input={ () => dispatch('search', searchValue) }
-      on:clear={ () => dispatch('search', '') }
-    />
   </HeaderUtilities>
-  {/if}
 </Header>
 
-<style>
+<style lang="scss" global>
   :global(a.bx--header__name) {
     font-size: 0.95rem !important;
     font-weight: 600 !important;
   }
 
   :global([role="search"].active) {
-    width: 100vw !important;
+    width: 90vw !important;
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
@@ -113,5 +109,14 @@ import { navigate } from 'svelte-routing';
 
   :global(.bx--overflow-menu:hover) {
     background: transparent !important;
+  }
+
+  .header__photo {
+    margin: 0 10px;
+    > img {
+      max-width: 24px;
+      max-height: 24px;
+      border-radius: 50px;
+    }
   }
 </style>
