@@ -7,8 +7,9 @@
   import Book from '../lib/Book.svelte'
   import SortingModal from '../lib/SortingModal.svelte'
   import AddModal from '../lib/AddModal.svelte'
+  import Information from '../lib/Information.svelte'
   import { Button, ComposedModal, Content, InlineLoading, ModalBody, ModalFooter, ModalHeader, Tag, TextInput } from 'carbon-components-svelte'
-  import { Add, CollapseAll, Information } from 'carbon-icons-svelte'
+  import { Add, CollapseAll } from 'carbon-icons-svelte'
 
   let books: BooksArray = []
   let booksUnmodifiedArray: BooksArray = []
@@ -176,14 +177,7 @@
   
       <!-- collections notification -->
       {#if !collectionID}
-      <div class="books__hintBlock">
-        <Information />
-  
-        <p class="books__hint">
-          Aktualnie wyświetlasz wszystkie dodane pozycje.
-          Wybierz kategorię, aby rozpocząć filtrowanie.
-        </p>
-      </div>
+        <Information message="Aktualnie wyświetlasz wszystkie dodane pozycje. Wybierz kategorię, aby rozpocząć filtrowanie."/>
       {/if}
 
       <!-- books list -->
@@ -245,20 +239,6 @@
       > button:first-child {
         margin: .25rem .25rem .25rem 0;
       }
-    }
-    &__hintBlock {
-      opacity: 0.5;
-      margin-top: 15px;
-      display: flex;
-      align-items: flex-start;
-
-      > svg {
-        width: 70px;
-      }
-    }
-    &__hint {
-      font-size: 14px;
-      line-height: 1.35;
     }
   }
 </style>

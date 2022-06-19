@@ -1,6 +1,6 @@
 <script lang="ts">
   import axios from "axios";
-  import { Column, Grid, ImageLoader, InlineLoading, Row } from "carbon-components-svelte";
+  import { Button, Column, Grid, ImageLoader, InlineLoading, Row } from "carbon-components-svelte";
   import { onMount } from "svelte";
   import { Truncate } from '../hooks/Truncate'
 
@@ -47,6 +47,9 @@
         <div class="item__description">
           { Truncate(book.description, 55) || "" }
         </div>
+
+        <!-- button to add book -->
+        <Button>Dodaj do biblioteki</Button>
       </div>
     </Column>
   </Row>

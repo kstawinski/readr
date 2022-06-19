@@ -5,6 +5,7 @@
   import { Search, Column, Content, InlineLoading, TextInput, Grid, Button } from 'carbon-components-svelte'
 import axios from 'axios';
 import SearchBookItem from '../lib/SearchBookItem.svelte'
+import Information from '../lib/Information.svelte'
 
   let isFetching = false
 
@@ -29,10 +30,12 @@ import SearchBookItem from '../lib/SearchBookItem.svelte'
   const tryToFindBook = () => new Promise((resolve, reject) => {
     if (searchKeyword.length > 3) {
       isFetching = true
+      
+      // Google Books search using user's location, so I can't use Heroku proxy
       let API_QUERY = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchKeyword)}}`
 
       axios.get(
-        `https://evening-citadel-78750.herokuapp.com/${API_QUERY}`,
+        `${API_QUERY}`,
         { timeout: 10000 })
         .then(data => data.data.items)
         .then(fetchedBooks => {
@@ -49,10 +52,10 @@ import SearchBookItem from '../lib/SearchBookItem.svelte'
     }
   })
 
-  // const fakeSearch = () => {
-  //   searchKeyword = 'Katarzyna Bonda'
-  //   tryToFindBook()
-  // }
+  const fakeSearch = () => {
+    searchKeyword = 'Katarzyna Bonda'
+    tryToFindBook()
+  }
 </script>
 
 <main>
@@ -67,6 +70,10 @@ import SearchBookItem from '../lib/SearchBookItem.svelte'
       bind:value={searchKeyword}
       on:change={() => tryToFindBook() }
     />
+
+    <button on:click={() => fakeSearch()}>XADSSADSA</button>
+
+    <Information message="Wpisz frazę kluczową, aby wyszukać pozycje. Możesz użyć numeru ISBN, autora, tytułu lub innych słów kluczowych. Następnie kliknij przycisk i dodaj książkę do swojej biblioteki." />
   </Content>
 
   {#if isFetching}
