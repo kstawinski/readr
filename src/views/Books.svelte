@@ -6,7 +6,6 @@
   import Header from '../lib/Header.svelte'
   import Book from '../lib/Book.svelte'
   import SortingModal from '../lib/SortingModal.svelte'
-  import AddModal from '../lib/AddModal.svelte'
   import Information from '../lib/Information.svelte'
   import { Button, ComposedModal, Content, InlineLoading, ModalBody, ModalFooter, ModalHeader, Tag, TextInput } from 'carbon-components-svelte'
   import { Add, CollapseAll } from 'carbon-icons-svelte'
@@ -16,7 +15,6 @@
   let collections: CollectionsArray = []
   let isLoading = true
   let isSortingVisible = false
-  let isAddModalVisible = false
 
   const fetchData = () => {
     Books.getAllBooks()
@@ -102,17 +100,16 @@
     }
   }
 
-  const createCollectionForm = {
-    isModal: false,
+  const collectionForm = {
+    isVisible: false,
     name: ''
   }
 
   const addCollection = (name: string) => {
     Collections.create(name)
       .then(() => {
-        // fetchCollections()
         fetchData()
-        isAddModalVisible = false
+        collectionForm.isVisible = false
       })
       .catch(error => console.error(error))
   }
@@ -124,16 +121,8 @@
   <Header
     title={PAGE_TITLE}
     hideUtilities={false}
-    on:open-add-modal={ () => isAddModalVisible = true }
     on:open-sorting-modal={ () => isSortingVisible = true }
     on:search={ ({ detail }) => useSearch(detail) }
-  />
-
-  <AddModal
-    label="Nowa książka" title="Dodaj przez ISBN"
-    open={ isAddModalVisible }
-    on:close={ () => isAddModalVisible = false }
-    on:success={ () => fetchData() }
   />
 
   <SortingModal
@@ -171,7 +160,7 @@
           interactive
           type="outline"
           icon={Add}
-          on:click={ () => createCollectionForm.isModal = true }
+          on:click={ () => collectionForm.isVisible = true }
         >Utwórz kolekcję</Tag>
       </div>
   
@@ -193,23 +182,23 @@
       </div>
 
       <!-- add collection modal -->
-      {#if createCollectionForm.isModal}
-      <ComposedModal bind:open={createCollectionForm.isModal}>
+      {#if collectionForm.isVisible}
+      <ComposedModal bind:open={collectionForm.isVisible}>
         <ModalHeader title="Nowa kolekcja" />
         <ModalBody hasForm>
           <TextInput
             size="xl"
             hideLabel
             placeholder="Wprowadź nazwę kolekcji..."
-            bind:value={createCollectionForm.name}
+            bind:value={collectionForm.name}
           />
         </ModalBody>
         <ModalFooter>
           <Button kind="secondary">Anuluj</Button>
           <Button
             kind="primary"
-            disabled={!(createCollectionForm.name.length > 3)}
-            on:click={() => addCollection(createCollectionForm.name)}
+            disabled={!(collectionForm.name.length > 3)}
+            on:click={() => addCollection(collectionForm.name)}
           >Dodaj kolekcję</Button>
         </ModalFooter>
       </ComposedModal>

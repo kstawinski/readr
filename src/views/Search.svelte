@@ -48,7 +48,7 @@
       on:change={() => tryToFindBook(searchKeyword) }
     />
 
-    <Information message="Wpisz frazę kluczową, aby wyszukać pozycje. Możesz użyć numeru ISBN, autora, tytułu lub innych słów kluczowych. Następnie kliknij przycisk i dodaj książkę do swojej biblioteki." />
+    <Information message="Wpisz frazę kluczową, aby wyszukać pozycje. Możesz użyć autora, tytułu lub innych słów kluczowych. Następnie kliknij przycisk i dodaj książkę do swojej biblioteki." />
   </Content>
 
   {#if isFetching}
