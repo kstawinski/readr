@@ -21,7 +21,9 @@
     <Route path="login" component={Login} />
     <AuthProxy path="/books" component={Books} />
 
-    <LogoutSection />
+    {#if isAuthenticated}
+      <LogoutSection />
+    {/if}
   </Router>
 </div>
 
