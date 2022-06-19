@@ -6,8 +6,10 @@
 import axios from 'axios';
 import SearchBookItem from '../lib/SearchBookItem.svelte'
 import Information from '../lib/Information.svelte'
+import { onMount } from 'svelte';
 
   let isFetching = false
+  let searchField
 
   const useSearch = (keyword: string): void => {
     if (keyword.length > 2) {
@@ -69,16 +71,23 @@ import Information from '../lib/Information.svelte'
       placeholder="Czego szukasz?"
       bind:value={searchKeyword}
       on:change={() => tryToFindBook() }
+      bind:ref={searchField}
     />
 
-    <button on:click={() => fakeSearch()}>XADSSADSA</button>
+    <!-- <button on:click={() => fakeSearch()}>XADSSADSA</button> -->
 
     <Information message="Wpisz frazę kluczową, aby wyszukać pozycje. Możesz użyć numeru ISBN, autora, tytułu lub innych słów kluczowych. Następnie kliknij przycisk i dodaj książkę do swojej biblioteki." />
   </Content>
 
+  <!-- {#if books.length === 0}
+    <div class="search__placeholder">
+      <img class="login__illustration" src="./search-illustration.svg" alt="">
+    </div>
+  {/if} -->
+
   {#if isFetching}
     <div class="loader">
-      <InlineLoading />
+      <InlineLoading description="Szukam książek..." />
     </div>
   {:else}
     <Content>
@@ -96,7 +105,14 @@ import Information from '../lib/Information.svelte'
 <style lang="scss" global>
   .search {
     &__item {
-      margin-bottom: 15px;
+      margin-bottom: 50px;
+    }
+    &__placeholder {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.5;
     }
   }
 </style>

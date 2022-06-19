@@ -1,6 +1,7 @@
 <script lang="ts">
   import axios from "axios";
   import { Button, Column, Grid, ImageLoader, InlineLoading, Row } from "carbon-components-svelte";
+import { Add } from "carbon-icons-svelte";
   import { onMount } from "svelte";
   import { Truncate } from '../hooks/Truncate'
 
@@ -34,7 +35,7 @@
         <svelte:fragment slot="loading">
           <InlineLoading />
         </svelte:fragment>
-        <svelte:fragment slot="error">An error occurred.</svelte:fragment>
+        <svelte:fragment slot="error">Wystąpił błąd przy pobieraniu okładki.</svelte:fragment>
       </ImageLoader>
     </Column>
 
@@ -49,7 +50,7 @@
         </div>
 
         <!-- button to add book -->
-        <Button>Dodaj do biblioteki</Button>
+        <Button size="field" kind="secondary" icon={Add}>Dodaj do biblioteki</Button>
       </div>
     </Column>
   </Row>
