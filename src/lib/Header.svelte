@@ -1,20 +1,30 @@
 <script lang="ts">
   export let title: string
+  export let hideUtilities: boolean
 
-  import { createEventDispatcher } from 'svelte'
+  import { beforeUpdate, createEventDispatcher } from 'svelte'
   import {
     Header,
     SkipToContent,
     HeaderUtilities,
     HeaderSearch,
-    HeaderGlobalAction
+    HeaderGlobalAction,
+OverflowMenu,
+OverflowMenuItem,
+Dropdown
   } from 'carbon-components-svelte'
   import { Add, SettingsAdjust } from 'carbon-icons-svelte';
+import { navigate } from 'svelte-routing';
 
   let isSideNavOpen = false
   let searchValue: string
 
   const dispatch = createEventDispatcher()
+
+  // Clear the style if empty string
+	// beforeUpdate (() => {
+	// 	hideUtilities = hideUtilities || undefined
+	// })
 </script>
 
 <Header platformName={ "" || title } bind:isSideNavOpen>
@@ -22,12 +32,37 @@
     <SkipToContent />
   </div>
 
+  {#if !hideUtilities}
   <HeaderUtilities>
-    <HeaderGlobalAction
-      aria-label="Dodaj ksiażkę"
+    <!-- <HeaderGlobalAction>
+      <OverflowMenu flipped icon={Add}>
+        <OverflowMenuItem text="Manage credentials" />
+        <OverflowMenuItem
+          href="https://cloud.ibm.com/docs/api-gateway/"
+          text="API documentation"
+        />
+        <OverflowMenuItem danger text="Delete service" />
+      </OverflowMenu>
+
+    </HeaderGlobalAction> -->
+      <!-- aria-label="Dodaj ksiażkę"
       icon={Add}
       on:click={() => dispatch('open-add-modal')}
-    />
+    /> -->
+
+    <OverflowMenu style="width: auto;" flipped open>
+      <div slot="menu" class="bx--header__action">
+        <HeaderGlobalAction
+          aria-label="Dodaj nową książkę"
+          icon={Add}
+        />
+      </div>
+      <OverflowMenuItem
+        text="Szukaj książki..."
+        on:click={ () => navigate('/search') }
+      />
+      <OverflowMenuItem text="Wprowadź ISBN" />
+    </OverflowMenu>
 
     <HeaderGlobalAction
       aria-label="Ustawienia sortowania"
@@ -43,6 +78,7 @@
       on:clear={ () => dispatch('search', '') }
     />
   </HeaderUtilities>
+  {/if}
 </Header>
 
 <style>
@@ -68,5 +104,14 @@
 
   :global(.bx--header__action) {
     background: none !important;
+  }
+
+  :global(.bx--overflow-menu) {
+    width: auto !important;
+    height: auto !important;
+  }
+
+  :global(.bx--overflow-menu:hover) {
+    background: transparent !important;
   }
 </style>

@@ -3,6 +3,7 @@
   import AuthProxy from './views/AuthProxy.svelte'
   import Login from './views/Login.svelte'
   import Books from './views/Books.svelte'
+  import Search from './views/Search.svelte'
   import { Auth } from './hooks/Auth'
   import LogoutSection from './lib/LogoutSection.svelte'
 
@@ -20,6 +21,7 @@
     {/if}
     <Route path="login" component={Login} />
     <AuthProxy path="/books" component={Books} />
+    <AuthProxy path="/search" component={Search} />
 
     {#if isAuthenticated}
       <LogoutSection />

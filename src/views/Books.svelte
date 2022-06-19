@@ -122,6 +122,7 @@
 <main>
   <Header
     title={PAGE_TITLE}
+    hideUtilities={false}
     on:open-add-modal={ () => isAddModalVisible = true }
     on:open-sorting-modal={ () => isSortingVisible = true }
     on:search={ ({ detail }) => useSearch(detail) }
