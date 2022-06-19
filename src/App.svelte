@@ -5,7 +5,6 @@
   import Books from './views/Books.svelte'
   import Search from './views/Search.svelte'
   import { Auth } from './hooks/Auth'
-  import LogoutSection from './lib/LogoutSection.svelte'
 
   export let url = ''
 
@@ -22,10 +21,6 @@
     <Route path="login" component={Login} />
     <AuthProxy path="/books" component={Books} />
     <AuthProxy path="/search" component={Search} />
-
-    {#if isAuthenticated}
-      <LogoutSection />
-    {/if}
   </Router>
 </div>
 
