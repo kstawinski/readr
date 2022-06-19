@@ -4,6 +4,7 @@
   import Header from '../lib/Header.svelte'
   import { Search, Column, Content, InlineLoading, TextInput, Grid, Button } from 'carbon-components-svelte'
 import axios from 'axios';
+import SearchBookItem from '../lib/SearchBookItem.svelte'
 
   let isFetching = false
 
@@ -43,14 +44,15 @@ import axios from 'axios';
         .catch(error => reject(error))
         .finally(() => {
           isFetching = false
+          searchKeyword = ''
         })
     }
   })
 
-  const fakeSearch = () => {
-    searchKeyword = 'Ekspozycja'
-    tryToFindBook()
-  }
+  // const fakeSearch = () => {
+  //   searchKeyword = 'Katarzyna Bonda'
+  //   tryToFindBook()
+  // }
 </script>
 
 <main>
@@ -65,8 +67,6 @@ import axios from 'axios';
       bind:value={searchKeyword}
       on:change={() => tryToFindBook() }
     />
-
-    <Button on:click={() => fakeSearch()}>Szukaj</Button>
   </Content>
 
   {#if isFetching}
@@ -77,7 +77,9 @@ import axios from 'axios';
     <Content>
       <ul>
         {#each books as book}
-          <li>{book.volumeInfo.title}</li>
+          <li class="search__item">
+            <SearchBookItem book={ book.volumeInfo } />
+          </li>
         {/each}
       </ul>
     </Content>
@@ -86,5 +88,8 @@ import axios from 'axios';
 
 <style lang="scss" global>
   .search {
+    &__item {
+      margin-bottom: 15px;
+    }
   }
 </style>
