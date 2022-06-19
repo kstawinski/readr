@@ -1,13 +1,17 @@
 <script lang="ts">
-  import axios from "axios";
-  import { Button, Column, Grid, ImageLoader, InlineLoading, Row } from "carbon-components-svelte";
-import { Add } from "carbon-icons-svelte";
-  import { onMount } from "svelte";
-  import { Truncate } from '../hooks/Truncate'
-
   export let book: any
 
-  // import { createEventDispatcher } from 'svelte'
+  import axios from 'axios'
+  import { Button, Column, Grid, ImageLoader, InlineLoading, Row } from 'carbon-components-svelte'
+  import { Add, NoImage } from 'carbon-icons-svelte'
+  import { onMount } from 'svelte'
+  import { Truncate } from '../hooks/Truncate'
+  import { db } from '../firebase'
+  import { collection, addDoc } from 'firebase/firestore'
+  import { createEventDispatcher } from 'svelte'
+  import { Store } from '../hooks/Store'
+  import { navigate } from 'svelte-routing'
+  const dispatch = createEventDispatcher()
 
   const fetchBookCover = () => new Promise((resolve, reject) => {
     const PROXY_URL = 'https://evening-citadel-78750.herokuapp.com'
@@ -18,8 +22,34 @@ import { Add } from "carbon-icons-svelte";
         resolve(bookCoverUrl)
         console.log(bookCoverUrl)
       })
-      .catch(e => reject(e))
+      .catch(error => reject(error))
   })
+
+  const getISBN = () => {
+    const isbnArray = book.industryIdentifiers
+    return isbnArray.filter(item => item.type === 'ISBN_13')[0].identifier
+  }
+
+  const addToLibrary = () => {
+    const bookData = {
+      uid: Store.getItem('uid'),
+      isbn: getISBN(),
+      title: book.title,
+      author: book.authors.join(', '),
+      thumbnail: book.cover,
+      addDate: new Date(),
+      lastModifiedDate: new Date(),
+      publishedAt: Number(book.publishedDate)
+    }
+
+    // submit book
+    addDoc(collection(db, 'books'), bookData)
+      .then(() => {
+        // return to homepage
+        navigate('/')
+      })
+      .catch(error => console.error(error))
+  }
 
   onMount(() => {
     fetchBookCover()
@@ -35,7 +65,9 @@ import { Add } from "carbon-icons-svelte";
         <svelte:fragment slot="loading">
           <InlineLoading />
         </svelte:fragment>
-        <svelte:fragment slot="error">Wystąpił błąd przy pobieraniu okładki.</svelte:fragment>
+        <svelte:fragment slot="error">
+          <NoImage size={32} />
+        </svelte:fragment>
       </ImageLoader>
     </Column>
 
@@ -43,14 +75,18 @@ import { Add } from "carbon-icons-svelte";
     <Column>
       <div class="item__content">
         <div class="item__title">{ book.title }</div>
-        <div class="item__author">{ book.authors || "" }</div>
-        
+        <div class="item__author">{ (book.authors || []).join(', ') }</div>
+
         <div class="item__description">
-          { Truncate(book.description, 55) || "" }
+          { Truncate(book.description, 35) || "" }
         </div>
 
-        <!-- button to add book -->
-        <Button size="field" kind="secondary" icon={Add}>Dodaj do biblioteki</Button>
+        <Button
+          size="field"
+          kind="secondary"
+          icon={Add}
+          on:click={ () => addToLibrary() }
+        >Dodaj do biblioteki</Button>
       </div>
     </Column>
   </Row>
@@ -67,30 +103,13 @@ import { Add } from "carbon-icons-svelte";
       font-weight: 600;
       font-size: 105%;
     }
-    // &__thumbnail {
-    //   height: 170px;
-    //   width: 100%;
-    //   position: relative;
-    //   cursor: pointer;
-    // }
-    // &__img {
-    //   width: 100%;
-    //   height: 100%;
-    //   background-size: cover;
-    //   background-position: center center;
-    //   border-radius: 2px;
-    // }
     &__content {
-      margin: 0 15px
+      margin: 0 15px;
     }
     &__description {
       line-height: 1.3;
       margin: 10px 0;
-      color: rgb(88, 88, 88);
-      // white-space: nowrap;
-      max-height: 200px;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      color: #585858;
     }
     &__author {
       margin-top: 5px;
