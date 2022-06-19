@@ -50,7 +50,7 @@ import { navigate } from 'svelte-routing';
       on:click={() => dispatch('open-add-modal')}
     /> -->
 
-    <OverflowMenu style="width: auto;" flipped open>
+    <OverflowMenu style="width: auto;" flipped>
       <div slot="menu" class="bx--header__action">
         <HeaderGlobalAction
           aria-label="Dodaj nową książkę"
