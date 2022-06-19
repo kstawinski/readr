@@ -1,68 +1,43 @@
 <script lang="ts">
-  const PAGE_TITLE: string = 'Wyszukiwanie'
+  const PAGE_TITLE: string = 'Wyszukiwanie książek'
 
   import Header from '../lib/Header.svelte'
-  import { Search, Column, Content, InlineLoading, TextInput, Grid, Button } from 'carbon-components-svelte'
-import axios from 'axios';
-import SearchBookItem from '../lib/SearchBookItem.svelte'
-import Information from '../lib/Information.svelte'
-import { onMount } from 'svelte';
+  import { Search, Content, InlineLoading } from 'carbon-components-svelte'
+  import axios from 'axios'
+  import SearchBookItem from '../lib/SearchBookItem.svelte'
+  import Information from '../lib/Information.svelte'
 
   let isFetching = false
-  let searchField
-
-  const useSearch = (keyword: string): void => {
-    if (keyword.length > 2) {
-      // reset "filter by category"
-      collectionID = ''
-
-      const searchValue = keyword.toLowerCase()
-      books = booksUnmodifiedArray.filter(book =>
-        book.title.toLowerCase().includes(searchValue)
-        || book.author.toLowerCase().includes(searchValue)
-      )
-    } else if (keyword.length === 0) { // on close field / delete value from input 
-      books = booksUnmodifiedArray
-    }
-  }
-
   let books = []
   let searchKeyword = ''
 
-  const tryToFindBook = () => new Promise((resolve, reject) => {
+  const tryToFindBook = (keyword: string) => new Promise((resolve, reject) => {
+    // clear array before next search (or first, but that's no matter)
+    books = []
+
     if (searchKeyword.length > 3) {
       isFetching = true
-      
-      // Google Books search using user's location, so I can't use Heroku proxy
-      let API_QUERY = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchKeyword)}}`
 
-      axios.get(
-        `${API_QUERY}`,
-        { timeout: 10000 })
+      // Google Books search using user's location, so I can't use my Heroku proxy
+      let API_QUERY = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(keyword)}}`
+
+      axios.get(`${API_QUERY}`)
         .then(data => data.data.items)
         .then(fetchedBooks => {
-          // console.log(extractedBooks)
           books.push(...fetchedBooks)
           resolve('ok')
-          console.log(books)
         })
         .catch(error => reject(error))
         .finally(() => {
           isFetching = false
-          searchKeyword = ''
         })
     }
   })
-
-  const fakeSearch = () => {
-    searchKeyword = 'Katarzyna Bonda'
-    tryToFindBook()
-  }
 </script>
 
 <main>
   <Header
-    title={PAGE_TITLE}
+    title={ PAGE_TITLE }
     hideUtilities={ true }
   />
 
@@ -70,23 +45,14 @@ import { onMount } from 'svelte';
     <Search
       placeholder="Czego szukasz?"
       bind:value={searchKeyword}
-      on:change={() => tryToFindBook() }
-      bind:ref={searchField}
+      on:change={() => tryToFindBook(searchKeyword) }
     />
-
-    <!-- <button on:click={() => fakeSearch()}>XADSSADSA</button> -->
 
     <Information message="Wpisz frazę kluczową, aby wyszukać pozycje. Możesz użyć numeru ISBN, autora, tytułu lub innych słów kluczowych. Następnie kliknij przycisk i dodaj książkę do swojej biblioteki." />
   </Content>
 
-  <!-- {#if books.length === 0}
-    <div class="search__placeholder">
-      <img class="login__illustration" src="./search-illustration.svg" alt="">
-    </div>
-  {/if} -->
-
   {#if isFetching}
-    <div class="loader">
+    <div class="search__loader">
       <InlineLoading description="Szukam książek..." />
     </div>
   {:else}
@@ -113,6 +79,16 @@ import { onMount } from 'svelte';
       align-items: center;
       justify-content: center;
       opacity: 0.5;
+    }
+    &__loader {
+      min-height: 30vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      > div:first-child {
+        width: auto;
+      }
     }
   }
 </style>
