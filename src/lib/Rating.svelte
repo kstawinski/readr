@@ -10,7 +10,7 @@
   </div>
 
   <div class="rating__value">
-    { rate }
+    { rate.toLocaleString() }
   </div>
 </div>
 

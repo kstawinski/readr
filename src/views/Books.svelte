@@ -7,6 +7,7 @@
   import Book from '../lib/Book.svelte'
   import SortingModal from '../lib/SortingModal.svelte'
   import Information from '../lib/Information.svelte'
+  import AverageRating from '../lib/AverageRating.svelte'
   import { Button, ComposedModal, Content, InlineLoading, ModalBody, ModalFooter, ModalHeader, Tag, TextInput } from 'carbon-components-svelte'
   import { Add, CollapseAll } from 'carbon-icons-svelte'
 
@@ -167,6 +168,8 @@
       <!-- collections notification -->
       {#if !collectionID}
         <Information message="Aktualnie wyświetlasz wszystkie dodane pozycje. Wybierz kategorię, aby rozpocząć filtrowanie."/>
+      {:else if collectionID && (books.filter(bookItem => bookItem.rate > 0).length > 0)}
+        <AverageRating {books} />
       {/if}
 
       <!-- books list -->
