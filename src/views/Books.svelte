@@ -19,9 +19,9 @@
 
   const fetchData = () => {
     Books.getAllBooks()
-      .then(booksArr => {
-        books = booksArr
-        booksUnmodifiedArray = booksArr
+      .then(fetchedBooks => {
+        books = fetchedBooks
+        booksUnmodifiedArray = fetchedBooks as BooksArray
         updateSort({ method: 'editDes', isRatingRequired: false })
 
         Collections.getAll().then(collectionsArr => {

@@ -1,32 +1,34 @@
 import { db } from '../firebase'
 import { collection, getDocs, where, query, addDoc } from 'firebase/firestore'
 import { Store } from './Store'
+import axios from 'axios'
 
 const UID = Store.getItem('uid')
+const API_URL = 'https://api.readr.fun'
 
 export const Collections = {
   getAll: () => new Promise((resolve: (value: CollectionsArray) => void, reject) => {
-    const collectionsRef = query(
-      collection(db, 'collections'),
-      where('uid', '==', UID)
-    )
-
-    getDocs(collectionsRef)
-      .then(qSnap => {
-        const collectionsArray: CollectionsArray = qSnap.docs.map(d => (<Collection>{ id: d.id, ...d.data() }))
-        resolve(collectionsArray)
+    axios.get(`${API_URL}/collections/${UID}`)
+      .then((response) => {
+        console.log(response.data);
+        resolve(response.data as CollectionsArray);
       })
-      .catch(error => {
-        reject(error)
+      .catch((error) => {
+        console.log(error);
       })
   }),
 
-  create: (name: string) => new Promise((resolve: (value: boolean) => void, reject) => {
-    addDoc(collection(db, 'collections'), {
-      text: name,
-      uid: UID
+  create: (collectionName: string) => new Promise((resolve: (value: boolean) => void, reject) => {
+    axios.post(`${API_URL}/collections/${UID}`, {
+      title: collectionName
     })
-      .then(() => resolve(true))
-      .catch(error => reject(error))
+      .then((response) => {
+        console.log(response.data);
+        resolve(true)
+      })
+      .catch((error) => {
+        console.log(error);
+        reject(error);
+      })
   })
 }
